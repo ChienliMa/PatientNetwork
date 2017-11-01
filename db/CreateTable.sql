@@ -79,6 +79,8 @@ Create table Users(
 );
 
 -- DATA MIGRATION --
+SET SQL_SAFE_UPDATES = 0;
+
 
 INSERT ignore INTO Organizations 
 (Name)
@@ -86,11 +88,18 @@ SELECT
 OrganizationName
 FROM PhysiciansRaw;
 
-INSERT ignore INTO Organizations 
-(Address,City,State,ZipCode,Phone,Location)
-SELECT 
-Address,City,State,`ZIP Code`,`Phone Number`,Location
-FROM HospitalInformation_WA;
+UPDATE 
+Organizations o,
+HospitalInformation_WA h
+SET
+o.Address = h.Address,
+o.City = h.City,
+o.State = h.State,
+o.ZipCode = h.`ZIP Code`,
+o.Phone = h.`Phone Number`,
+o.Location = h.Location
+Where
+o.Name = h.`Hospital Name` ;
 
 INSERT INTO Physicians 
 (ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName)
