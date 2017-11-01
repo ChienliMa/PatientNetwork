@@ -81,7 +81,6 @@ Create table Users(
 -- DATA MIGRATION --
 SET SQL_SAFE_UPDATES = 0;
 
-
 INSERT ignore INTO Organizations 
 (Name)
 SELECT 
@@ -106,3 +105,13 @@ INSERT INTO Physicians
 SELECT 
 ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName
 FROM PhysiciansRaw;
+
+-- TEST DATA INSERTATION --
+
+insert into Users values('physician', 'physician', 'PHYSICIAN', null, 1003004573, null, null);
+insert into Users values('ordinary', 'ordinary', 'ORDINARY', null, null, 'foo', 'bar');
+insert into Users values('Organization', 'Organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
+
+
+
+
