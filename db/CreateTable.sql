@@ -10,12 +10,12 @@ drop table if exists Organizations;
 
 
 create table Organizations(
-	OrganizationId int not null,
+	OrganizationId int auto_increment,
     Name  varchar(255) not null unique,
     Address varchar(255) default '',
     City varchar(255) default '',
     State varchar(2) default '',
-    Zip int,
+    ZipCode int,
     Phone int,
     Location varchar(255) default '',
 	constraint pk_Organizations_OrganizationId primary key (OrganizationId)
@@ -78,3 +78,22 @@ Create table Users(
     references Physicians(ProviderId) on delete cascade
 );
 
+-- DATA MIGRATION --
+
+INSERT ignore INTO Organizations 
+(Name)
+SELECT 
+OrganizationName
+FROM PhysiciansRaw;
+
+INSERT ignore INTO Organizations 
+(Address,City,State,ZipCode,Phone,Location)
+SELECT 
+Address,City,State,`ZIP Code`,`Phone Number`,Location
+FROM HospitalInformation_WA;
+
+INSERT INTO Physicians 
+(ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName)
+SELECT 
+ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName
+FROM PhysiciansRaw;
