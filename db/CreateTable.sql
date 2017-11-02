@@ -6,7 +6,7 @@ drop table if exists Comments;
 drop table if exists Reviews;
 drop table if exists Users;
 drop table if exists Physicians;
-drop table if exists Hospitals;
+drop table if exists Hospitals;Hospitals
 drop table if exists Organizations;
 
 
@@ -148,5 +148,20 @@ insert into Users values('ordinary', 'ordinary', 'ORDINARY', null, null, 'foo', 
 insert into Users values('Organization', 'Organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
 
 
+insert into Reviews 
+(Content, Rating, UserName, Type, OrganizationId, ProviderId)
+values('good', 5, 'physician', 'PhysicianReview', null, 1003004573);
+
+insert into Reviews 
+(ReviewId, Created, Content, Rating, UserName, Type, OrganizationId, ProviderId)
+values('bad', 4, 'Organization', 'OrganizationReview', null, 12);
+
+insert into Comments 
+(Content, UserName, ReviewId)
+values('good', 'physician', 0);
+
+insert into Comments 
+(Content, UserName, ReviewId)
+values('bad', 'Organization', 1);
 
 
