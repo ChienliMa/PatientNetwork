@@ -188,15 +188,15 @@ insert into Reviews
 values('good', 5, 'physician', 'PhysicianReview', null, 1003004573);
 
 insert into Reviews 
-(ReviewId, Created, Content, Rating, UserName, Type, OrganizationId, ProviderId)
-values('bad', 4, 'Organization', 'OrganizationReview', null, 12);
+(Content, Rating, UserName, Type, OrganizationId, ProviderId)
+values('bad', 4, 'Organization', 'OrganizationReview', 12, NULL);
 
 insert into Comments 
 (Content, UserName, ReviewId)
-values('good', 'physician', 0);
+values('good', 'physician', 1);
 
 insert into Comments 
 (Content, UserName, ReviewId)
-values('bad', 'Organization', 1);
+values('bad', 'Organization', 2);
 
 
