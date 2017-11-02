@@ -25,7 +25,7 @@ create table Organizations(
 
 create table Hospitals(
 	OrganizationId int(11) not null,
-	NPI int(11) DEFAULT NULL,
+	NPI int(11) not null unique,
 	Type text,
 	Ownership varchar(255),
 	EmergencyServices bool,
