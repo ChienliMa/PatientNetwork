@@ -3,14 +3,11 @@
 use CS5200;
 
 drop table if exists Comments;
-drop table if exists Review;
-
+drop table if exists Reviews;
 drop table if exists Users;
 drop table if exists Physicians;
 drop table if exists Hospitals;
 drop table if exists Organizations;
-
-
 
 
 
@@ -42,7 +39,7 @@ create table Hospitals(
 	MedicalImageUsageEfficientNationalComparison enum('SAME', 'ABOVE', 'BELOW') default null,
     constraint pk_Hospitals_OrganizationId primary key (OrganizationId),
     constraint fk_Hospitals_OrganizationId foreign key (OrganizationId) 
-    references Organizations(OrganizationId) on delete cascade
+    references Organizations(OrganizationId)
 );
 
 CREATE TABLE Physicians (
@@ -91,15 +88,15 @@ Create table Reviews(
   Rating int,
   UserName varchar(55),
   Type enum('PhysicianReview', 'OrganizationReview'),
-  OrganaztionId int,
+  OrganizationId int,
   ProviderId int,
   constraint pk_Reviews_ReviewId primary key (ReviewId),
   constraint fk_Reviews_UserName foreign key (UserName)
   references Users(UserName) on delete set null,
   constraint fk_Reviews_Physicians foreign key (ProviderId)
   references Physicians(ProviderId) on delete set null,
-  constraint fk_Organazations_OrganazationId foreign key (OrganazationId)
-  references Organazations(OrganazationId) on delete set null
+  constraint fk_Organazations_OrganizationId foreign key (OrganizationId)
+  references Organizations(OrganizationId) on delete set null
 );
 
 Create table Comments(
