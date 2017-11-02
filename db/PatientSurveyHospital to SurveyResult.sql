@@ -24,15 +24,16 @@ CREATE TABLE SurveyResult (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- INSERT INTO SurveyItem(
--- MeasureId,
--- Question,
--- AnswerDescription)
--- SELECT
---     `HCAHPS Measure ID`,
---     `HCAHPS Question`,
---     `HCAHPS Answer Description`
--- FROM PatientSurveyHospital_WA;
+INSERT INTO SurveyItem(
+MeasureId,
+Question,
+AnswerDescription)
+SELECT
+    `HCAHPS Measure ID`,
+    `HCAHPS Question`,
+    `HCAHPS Answer Description`
+FROM PatientSurveyHospital_WA
+GROUP BY `HCAHPS Measure ID`;
 -- 
 -- INSERT INTO SurveyResult(
 -- SurveyItem,

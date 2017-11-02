@@ -6,9 +6,10 @@ drop table if exists Comments;
 drop table if exists Reviews;
 drop table if exists Users;
 drop table if exists Physicians;
+DROP TABLE IF EXISTS SurveyResult;
+DROP TABLE IF EXISTS SurveyItem;
 drop table if exists Hospitals;
 drop table if exists Organizations;
-
 
 
 create table Organizations(
@@ -112,6 +113,27 @@ Create table Comments(
   references Reviews(ReviewId) on delete cascade
 );
 
+CREATE TABLE SurveyItem (
+    MeasureId VARCHAR(255),
+    Question TEXT,
+    AnswerDescription TEXT,
+    CONSTRAINT pk_SurveyItem_MeasureId PRIMARY KEY(MeasureId)
+);
+
+CREATE TABLE SurveyResult (
+    ResultItemId INT(11) NOT NULL AUTO_INCREMENT,
+    ProviderId INT(11),
+    SurveyItem VARCHAR(255),
+    Measurement ENUM('Star Rating', 'Answer Percentage', 'Mean Value'),
+    StatisticalResult INT(11),
+    CONSTRAINT pk_SurveyResult_ResultItemId PRIMARY KEY (ResultItemId),
+    CONSTRAINT fk_SurveyResult_ProviderId FOREIGN KEY (ProviderId)
+        REFERENCES Hospitals (NPI)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_SurveyResult_SurveyItem FOREIGN KEY (SurveyItem)
+        REFERENCES SurveyItem (MeasureId)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 -- DATA MIGRATION --
 SET SQL_SAFE_UPDATES = 0;
@@ -140,6 +162,19 @@ INSERT INTO Physicians
 SELECT 
 ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName
 FROM PhysiciansRaw;
+
+INSERT INTO SurveyItem(
+MeasureId,
+Question,
+AnswerDescription)
+SELECT
+    `HCAHPS Measure ID`,
+    `HCAHPS Question`,
+    `HCAHPS Answer Description`
+FROM PatientSurveyHospital_WA
+GROUP BY `HCAHPS Measure ID`;
+
+
 
 -- TEST DATA INSERTATION --
 
