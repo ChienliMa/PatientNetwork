@@ -10,12 +10,12 @@ drop table if exists Organizations;
 
 
 create table Organizations(
-	OrganizationId int not null,
+	OrganizationId int auto_increment,
     Name  varchar(255) not null unique,
     Address varchar(255) default '',
     City varchar(255) default '',
     State varchar(2) default '',
-    Zip int,
+    ZipCode int,
     Phone int,
     Location varchar(255) default '',
 	constraint pk_Organizations_OrganizationId primary key (OrganizationId)
@@ -77,4 +77,41 @@ Create table Users(
     constraint fk_Users_PhysicianId foreign key (PhysicianId)
     references Physicians(ProviderId) on delete cascade
 );
+
+-- DATA MIGRATION --
+SET SQL_SAFE_UPDATES = 0;
+
+INSERT ignore INTO Organizations 
+(Name)
+SELECT 
+OrganizationName
+FROM PhysiciansRaw;
+
+UPDATE 
+Organizations o,
+HospitalInformation_WA h
+SET
+o.Address = h.Address,
+o.City = h.City,
+o.State = h.State,
+o.ZipCode = h.`ZIP Code`,
+o.Phone = h.`Phone Number`,
+o.Location = h.Location
+Where
+o.Name = h.`Hospital Name` ;
+
+INSERT INTO Physicians 
+(ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName)
+SELECT 
+ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName
+FROM PhysiciansRaw;
+
+-- TEST DATA INSERTATION --
+
+insert into Users values('physician', 'physician', 'PHYSICIAN', null, 1003004573, null, null);
+insert into Users values('ordinary', 'ordinary', 'ORDINARY', null, null, 'foo', 'bar');
+insert into Users values('Organization', 'Organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
+
+
+
 
