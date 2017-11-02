@@ -2,11 +2,14 @@
 
 use CS5200;
 
+drop table if exists Comments;
+drop table if exists Review;
 
 drop table if exists Users;
 drop table if exists Physicians;
 drop table if exists Hospitals;
 drop table if exists Organizations;
+
 
 
 
@@ -67,18 +70,51 @@ CREATE TABLE Physicians (
 
 Create table Users(
 	Username varchar(255),
-    Password varchar(255),
-    Type enum('ORDINARY', 'ORGANIZATION', 'PHYSICIAN'),
-    OrganizationId int,
-    PhysicianId int,
-    FirstName varchar(255) default '',
-    LastName varchar(255) default '',
-    constraint pk_Users_Username primary key (UserName),
-    constraint fk_Users_OrganizationId foreign key (OrganizationId)
-    references Organizations(OrganizationId) on delete cascade,
-    constraint fk_Users_PhysicianId foreign key (PhysicianId)
-    references Physicians(ProviderId) on delete cascade
+  Password varchar(255),
+  Type enum('ORDINARY', 'ORGANIZATION', 'PHYSICIAN'),
+  OrganizationId int,
+  PhysicianId int,
+  FirstName varchar(255) default '',
+  LastName varchar(255) default '',
+  constraint pk_Users_Username primary key (UserName),
+  constraint fk_Users_OrganizationId foreign key (OrganizationId)
+  references Organizations(OrganizationId) on delete cascade,
+  constraint fk_Users_PhysicianId foreign key (PhysicianId)
+  references Physicians(ProviderId) on delete cascade
 );
+
+
+Create table Reviews(
+  ReviewId int auto_increment,
+  Created timestamp,
+  Content text,
+  Rating int,
+  UserName varchar(55),
+  Type enum('PhysicianReview', 'OrganizationReview'),
+  OrganaztionId int,
+  ProviderId int,
+  constraint pk_Reviews_ReviewId primary key (ReviewId),
+  constraint fk_Reviews_UserName foreign key (UserName)
+  references Users(UserName) on delete set null,
+  constraint fk_Reviews_Physicians foreign key (ProviderId)
+  references Physicians(ProviderId) on delete set null,
+  constraint fk_Organazations_OrganazationId foreign key (OrganazationId)
+  references Organazations(OrganazationId) on delete set null
+)
+
+Create table Comments(
+  CommentId int auto_increment,
+  Created timestamp,
+  Content text,
+  UserName varchar(55),
+  ReviewId int,
+  constraint pk_Comments_CommentId primary key (CommentId),
+  constraint fk_Comments_UserName foreign key (UserName)
+  references Users(UserName) on delete set null,
+  constraint fk_Comments_ReviewId foreign key (ReviewId)
+  references Reviews(ReviewId) on delete cascade
+)
+
 
 -- DATA MIGRATION --
 SET SQL_SAFE_UPDATES = 0;
