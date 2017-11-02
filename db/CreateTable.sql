@@ -100,7 +100,7 @@ Create table Reviews(
   references Physicians(ProviderId) on delete set null,
   constraint fk_Organazations_OrganazationId foreign key (OrganazationId)
   references Organazations(OrganazationId) on delete set null
-)
+);
 
 Create table Comments(
   CommentId int auto_increment,
@@ -113,7 +113,7 @@ Create table Comments(
   references Users(UserName) on delete set null,
   constraint fk_Comments_ReviewId foreign key (ReviewId)
   references Reviews(ReviewId) on delete cascade
-)
+);
 
 
 -- DATA MIGRATION --
