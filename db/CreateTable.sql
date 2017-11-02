@@ -6,7 +6,7 @@ drop table if exists Comments;
 drop table if exists Reviews;
 drop table if exists Users;
 drop table if exists Physicians;
-drop table if exists Hospitals;Hospitals
+drop table if exists Hospitals;
 drop table if exists Organizations;
 
 
