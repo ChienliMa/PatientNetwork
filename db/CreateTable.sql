@@ -29,7 +29,7 @@ create table Hospitals(
 	NPI int(11) not null unique,
 	Type text,
 	Ownership varchar(255),
-	EmergencyServices bool,
+	EmergencyServices text,
 	OverAllRating text,
 	MortalityNationalComparison enum('SAME', 'ABOVE', 'BELOW') default null,
 	SafetyNationalComparison enum('SAME', 'ABOVE', 'BELOW') default null,
@@ -47,27 +47,26 @@ CREATE TABLE Physicians (
   ProviderId int(11) NOT NULL,
   LastName varchar(255),
   FirstName varchar(255),
-  MiddleInitial varchar(255),
-  Credentials varchar(255),
+  MiddleName varchar(255),
+  Credential varchar(255),
   Gender varchar(255),
-  EntityType varchar(255),
   StreetAddress1 varchar(255),
   StreetAddress2 varchar(255),
   City varchar(255),
   ZipCode int(11) DEFAULT NULL,
   State varchar(255),
-  ProviderType varchar(255),
-  PlaceOfService varchar(255),
-  OrganizationName varchar(45) DEFAULT NULL,
-  constraint pk_Physicians_PrividerId primary key (ProviderId),
-  constraint fk_Physicians_OrganizationName foreign key (OrganizationName)
-  references Organizations(Name) on delete set null
+  -- PrimarySpecialty varchar(255),
+  constraint pk_Physicians_PrividerId primary key (ProviderId)
+);
+
+create table PlacesOfService (
+	ProviderId int(11) not null,
+    OrganizationName varchar(255)
 );
 
 
-
 Create table Users(
-	Username varchar(255),
+  Username varchar(255),
   Password varchar(255),
   Type enum('ORDINARY', 'ORGANIZATION', 'PHYSICIAN'),
   OrganizationId int,
@@ -138,30 +137,91 @@ CREATE TABLE SurveyResult (
 -- DATA MIGRATION --
 SET SQL_SAFE_UPDATES = 0;
 
+
+-- Organizations
 INSERT ignore INTO Organizations 
-(Name)
-SELECT 
-OrganizationName
-FROM PhysiciansRaw;
+	(Name)
+select distinct Name
+from 
+	(select distinct OrganizationLegalName as Name  from Physician_Compare_National_WA) as o
+	union select distinct HospitalLBN1 as Name from Physician_Compare_National_WA
+	union select distinct HospitalLBN2 as Name from Physician_Compare_National_WA
+	union select distinct HospitalLBN3 as Name from Physician_Compare_National_WA
+	union select distinct HospitalLBN4 as Name from Physician_Compare_National_WA
+	union select distinct HospitalLBN5 as Name from Physician_Compare_National_WA;
+
+delete from Organizations where Name = '';
 
 UPDATE 
-Organizations o,
-HospitalInformation_WA h
+	Organizations o,
+	HospitalInformation_WA h
 SET
-o.Address = h.Address,
-o.City = h.City,
-o.State = h.State,
-o.ZipCode = h.`ZIP Code`,
-o.Phone = h.`Phone Number`,
-o.Location = h.Location
+	o.Address = h.Address,
+	o.City = h.City,
+	o.State = h.State,
+	o.ZipCode = h.`ZIP Code`,
+	o.Phone = h.`Phone Number`,
+	o.Location = h.Location
 Where
-o.Name = h.`Hospital Name` ;
+	o.Name = h.`Hospital Name` ;
 
-INSERT INTO Physicians 
-(ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName)
+update
+	Organizations o,
+    Physician_Compare_National_WA p
+SET
+	o.Address = case when p.StreetAddress2 = '' then concat(p.StreetAddress1)
+					 else concat(p.StreetAddress1, ', ', p.StreetAddress2) end,
+    o.City = p.City,
+    o.State = p.State,
+    o.ZipCode = p.ZipCode,
+    o.Phone = p.Phone
+where
+	o.Name = p.OrganizationLegalName and o.City = '';
+
+-- Hospitals
+insert ignore into Hospitals
+(`OrganizationId`,
+`NPI`,
+`Type`,
+`Ownership`,
+`EmergencyServices`,
+`OverAllRating`,
+`MortalityNationalComparison`,
+`SafetyNationalComparison`,
+`ReadmissionNationalComparison`,
+`PatientExperienceNationalComparison`,
+`CareEffectivenessNationalComparison`,
+`TimelinessNationalComparison`,
+`MedicalImageUsageEfficientNationalComparison`)
+select
+	o.OrganizationId, h.`Provider ID`, h.`Hospital Type`, h.`Hospital Ownership`, h.`Emergency Services`,
+	h.`Hospital overall rating`, 
+    case when h.`Mortality national comparison` like 'Above%' then 'ABOVE' when h.`Mortality national comparison` like 'Same%' then 'SAME' when h.`Mortality national comparison` like 'Below%' then 'BELOW' end,
+	case when h.`Safety of care national comparison` like '%Above%' then 'ABOVE' when h.`Safety of care national comparison` like 'Same%' then 'SAME' when h.`Safety of care national comparison` like 'Below%' then 'BELOW' end,
+    case when h.`Readmission national comparison` like '%Above%' then 'ABOVE' when h.`Readmission national comparison` like 'Same%' then 'SAME' when h.`Readmission national comparison` like 'Below%' then 'BELOW' end,
+    case when h.`Patient experience national comparison` like '%Above%' then 'ABOVE' when  h.`Patient experience national comparison` like 'Same%' then 'SAME' when h.`Patient experience national comparison` like 'Below%' then 'BELOW' end,
+    case when h.`Effectiveness of care national comparison` like '%Above%' then 'ABOVE' when h.`Effectiveness of care national comparison` like 'Same%' then 'SAME' when h.`Effectiveness of care national comparison` like 'Below%' then 'BELOW' end,
+    case when h.`Timeliness of care national comparison` like '%Above%' then 'ABOVE' when h.`Timeliness of care national comparison`  like 'Same%' then 'SAME' when h.`Timeliness of care national comparison` like 'Below%' then 'BELOW' end,
+    case when h.`Efficient use of medical imaging national comparison` like '%Above%' then 'ABOVE' when h.`Efficient use of medical imaging national comparison` like 'Same%' then 'SAME' when h.`Efficient use of medical imaging national comparison` like 'Below%' then 'BELOW' end
+from
+	HospitalInformation_WA as h inner join Organizations as o on h.`Hospital Name` = o.Name;
+
+INSERT ignore INTO Physicians 
+	(ProviderId,LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State)
 SELECT 
-ProviderId,LastName,FirstName,MiddleInitial,Credentials,Gender,EntityType,StreetAddress1,StreetAddress2,City,ZipCode,State,ProviderType,PlaceOfService,OrganizationName
-FROM PhysiciansRaw;
+	NPI,        LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State
+FROM Physician_Compare_National_WA;
+
+
+-- PlacesOfService
+insert into PlacesOfService
+select NPI, OrganizationLegalName from Physician_Compare_National_WA where OrganizationLegalName != ''
+union select NPI, HospitalLBN1 from Physician_Compare_National_WA where HospitalLBN1 != ''
+union select NPI, HospitalLBN2 from Physician_Compare_National_WA where HospitalLBN2 != ''
+union select NPI, HospitalLBN3 from Physician_Compare_National_WA where HospitalLBN3 != ''
+union select NPI, HospitalLBN4 from Physician_Compare_National_WA where HospitalLBN4 != ''
+union select NPI, HospitalLBN5 from Physician_Compare_National_WA where HospitalLBN5 != '';
+
 
 INSERT INTO SurveyItem(
 MeasureId,
@@ -178,14 +238,14 @@ GROUP BY `HCAHPS Measure ID`;
 
 -- TEST DATA INSERTATION --
 
-insert into Users values('physician', 'physician', 'PHYSICIAN', null, 1003004573, null, null);
+insert into Users values('physician', 'physician', 'PHYSICIAN', null, 1003009796, null, null);
 insert into Users values('ordinary', 'ordinary', 'ORDINARY', null, null, 'foo', 'bar');
 insert into Users values('Organization', 'Organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
 
 
 insert into Reviews 
 (Content, Rating, UserName, Type, OrganizationId, ProviderId)
-values('good', 5, 'physician', 'PhysicianReview', null, 1003004573);
+values('good', 5, 'physician', 'PhysicianReview', null, 1003009796);
 
 insert into Reviews 
 (Content, Rating, UserName, Type, OrganizationId, ProviderId)
