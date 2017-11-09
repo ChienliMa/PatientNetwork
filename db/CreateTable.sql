@@ -5,7 +5,7 @@ use CS5200;
 drop table if exists Comments;
 drop table if exists Reviews;
 drop table if exists PlacesOfService;
-drop table if exists Specialties;
+drop table if exists PhysicianSpecialties;
 drop table if exists Users;
 drop table if exists Physicians;
 DROP TABLE IF EXISTS SurveyResult;
@@ -62,7 +62,12 @@ CREATE TABLE Physicians (
   constraint pk_Physicians_PrividerId primary key (ProviderId)
 );
 
-create table Specialties (
+create table SpecialtyType (
+    Name varchar(255) unique not null,
+    constraint pk_SpecialtyType_Name primary key (Name)
+);
+
+create table PhysicianSpecialties (
   ProviderId int(11) NOT NULL,
   Speciality  text,
   IsPrimary boolean
@@ -231,12 +236,17 @@ union select NPI, HospitalLBN4 from Physician_Compare_National_WA where Hospital
 union select NPI, HospitalLBN5 from Physician_Compare_National_WA where HospitalLBN5 != '';
 
 -- Specialties
-insert into Specialties
+insert into PhysicianSpecialties
 select NPI, PrimarySpecialty, true from Physician_Compare_National_WA where PrimarySpecialty != '' 
 union select NPI, SecondarySpecialty1, false from Physician_Compare_National_WA where SecondarySpecialty1 != '' 
 union select NPI, SecondarySpecialty2, false  from Physician_Compare_National_WA where SecondarySpecialty2 != '' 
 union select NPI, SecondarySpecialty3, false  from Physician_Compare_National_WA where SecondarySpecialty3 != '' 
 union select NPI, SecondarySpecialty4, false  from Physician_Compare_National_WA where SecondarySpecialty4 != '';
+
+-- SpecialtyType
+insert ignore into SpecialtyType
+select distinct Speciality from PhysicianSpecialties;
+
 
 INSERT INTO SurveyItem(
 MeasureId,
@@ -248,7 +258,6 @@ SELECT
     `HCAHPS Answer Description`
 FROM PatientSurveyHospital_WA
 GROUP BY `HCAHPS Measure ID`;
-
 
 
 -- TEST DATA INSERTATION --
