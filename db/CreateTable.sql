@@ -4,6 +4,8 @@ use CS5200;
 
 drop table if exists Comments;
 drop table if exists Reviews;
+drop table if exists PlacesOfService;
+drop table if exists Specialties;
 drop table if exists Users;
 drop table if exists Physicians;
 DROP TABLE IF EXISTS SurveyResult;
@@ -55,15 +57,21 @@ CREATE TABLE Physicians (
   City varchar(255),
   ZipCode int(11) DEFAULT NULL,
   State varchar(255),
-  -- PrimarySpecialty varchar(255),
+  PrimarySpecialty varchar(255),
+  SecondarySpecialties text,
   constraint pk_Physicians_PrividerId primary key (ProviderId)
+);
+
+create table Specialties (
+  ProviderId int(11) NOT NULL,
+  Speciality  text,
+  IsPrimary boolean
 );
 
 create table PlacesOfService (
 	ProviderId int(11) not null,
     OrganizationName varchar(255)
 );
-
 
 Create table Users(
   Username varchar(255),
@@ -207,9 +215,9 @@ from
 	HospitalInformation_WA as h inner join Organizations as o on h.`Hospital Name` = o.Name;
 
 INSERT ignore INTO Physicians 
-	(ProviderId,LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State)
+	(ProviderId,LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State, PrimarySpecialty, SecondarySpecialties)
 SELECT 
-	NPI,        LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State
+	NPI,        LastName,FirstName,MiddleName,Credential,Gender,StreetAddress1,StreetAddress2,City,ZipCode,State, PrimarySpecialty, ALLSecondarySpecialties
 FROM Physician_Compare_National_WA;
 
 
@@ -222,6 +230,13 @@ union select NPI, HospitalLBN3 from Physician_Compare_National_WA where Hospital
 union select NPI, HospitalLBN4 from Physician_Compare_National_WA where HospitalLBN4 != ''
 union select NPI, HospitalLBN5 from Physician_Compare_National_WA where HospitalLBN5 != '';
 
+-- Specialties
+insert into Specialties
+select NPI, PrimarySpecialty, true from Physician_Compare_National_WA where PrimarySpecialty != '' 
+union select NPI, SecondarySpecialty1, false from Physician_Compare_National_WA where SecondarySpecialty1 != '' 
+union select NPI, SecondarySpecialty2, false  from Physician_Compare_National_WA where SecondarySpecialty2 != '' 
+union select NPI, SecondarySpecialty3, false  from Physician_Compare_National_WA where SecondarySpecialty3 != '' 
+union select NPI, SecondarySpecialty4, false  from Physician_Compare_National_WA where SecondarySpecialty4 != '';
 
 INSERT INTO SurveyItem(
 MeasureId,
