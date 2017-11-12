@@ -82,11 +82,11 @@ public class Users {
 	}
 
 	public String getFirstName() {
-		return Password;
+		return FirstName;
 	}
 
 	public void setFirstName(String firstName) {
-		this.Password = firstName;
+		FirstName = firstName;
 	}
 
 	public String getLastName() {

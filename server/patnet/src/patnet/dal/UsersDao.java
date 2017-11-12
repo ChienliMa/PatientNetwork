@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import patnet.model.Users;
 
@@ -44,6 +46,10 @@ public class UsersDao {
 			insertStmt.setInt(5, user.getPhysicianId());
 			insertStmt.setString(6, user.getFirstName());
 			insertStmt.setString(7, user.getLastName());
+			
+			
+			System.out.println(insertStmt.toString());
+			
 
 			insertStmt.executeUpdate();
 
@@ -135,6 +141,49 @@ public class UsersDao {
 			}
 		}
 		return null;
+	}
+
+	public List<Users> getUsersFromFirstName(String firstName) throws SQLException {
+		List<Users> blogUsers = new ArrayList<>();
+		String selectBlogUser = "SELECT Username,Password,Type,OrganizationId,PhysicianId, FirstName,LastName FROM Users WHERE FirstName=? ;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectBlogUser);
+			selectStmt.setString(1, firstName);
+			results = selectStmt.executeQuery();
+			while (results.next()) {
+				System.out.println("here");
+				String resultUserName = results.getString("Username");
+				String password = results.getString("Password");
+				Users.Type type = Users.Type.valueOf(results.getString("Type"));
+				int organizationId = results.getInt("OrganizationId");
+				int physicianId = results.getInt("PhysicianId");
+
+				String resultFirstName = results.getString("FirstName");
+				String lastName = results.getString("LastName");
+				Users user = new Users(resultUserName, password, type, organizationId, physicianId, resultFirstName,
+						lastName);
+				blogUsers.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
+			if (selectStmt != null) {
+				selectStmt.close();
+			}
+			if (results != null) {
+				results.close();
+			}
+		}
+		return blogUsers;
+
 	}
 
 	public Users delete(Users user) throws SQLException {
