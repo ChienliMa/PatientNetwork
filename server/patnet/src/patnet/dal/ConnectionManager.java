@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.servlet.ServletException;
-
 /**
  * Use ConnectionManager to connect to your database instance.
  * 
@@ -36,23 +34,24 @@ import javax.servlet.ServletException;
 public class ConnectionManager {
 
 	// User to connect to your database instance. By default, this is "root2".
-	private final String user = "root";
+	private static final String user = "root";
 	// Password for the user.
-	private final String password = "PatientNetwork";
+	private static final String password = "PatientNetwork";
 	// URI to your database server. If running on the same machine, then this is "localhost".
-	private final String hostName = "cs5200project.cxmb9zqrnn2g.us-west-1.rds.amazonaws.com";
+	private static final String hostName = "cs5200project.cxmb9zqrnn2g.us-west-1.rds.amazonaws.com";
 	// Port to your database server. By default, this is 3307.
-	private final int port= 3306;
+	private static final int port= 3306;
 	// Name of the MySQL schema that contains your tables.
-	private final String schema = "CS5200";
+	private static final String schema = "CS5200";
 
+	
 	/** Get the connection to the database instance. */
-	public Connection getConnection() throws SQLException {
+	public static Connection getConnection() throws SQLException {
 		Connection connection = null;
 		try {
 			Properties connectionProperties = new Properties();
-			connectionProperties.put("user", this.user);
-			connectionProperties.put("password", this.password);
+			connectionProperties.put("user", ConnectionManager.user);
+			connectionProperties.put("password", ConnectionManager.password);
 			// Ensure the JDBC driver is loaded by retrieving the runtime Class descriptor.
 			// Otherwise, Tomcat may have issues loading libraries in the proper order.
 			// One alternative is calling this in the HttpServlet init() override.
@@ -63,7 +62,7 @@ public class ConnectionManager {
 				throw new SQLException(e);
 			}
 			connection = DriverManager.getConnection(
-			    "jdbc:mysql://" + this.hostName + ":" + this.port + "/" + this.schema,
+			    "jdbc:mysql://" + ConnectionManager.hostName + ":" + ConnectionManager.port + "/" + ConnectionManager.schema,
 			    connectionProperties);
 		} catch (SQLException e) {
 			e.printStackTrace();
