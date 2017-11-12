@@ -50,9 +50,7 @@ public class GeneralDAO {
 				throw new SQLException("Failed to prepare statment");
 			}
 			rs = statement.executeQuery();
-			if (rs.next()) {
-				results = retrivalFunction.apply(rs);
-			}
+			results = retrivalFunction.apply(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -67,6 +65,8 @@ public class GeneralDAO {
 		return results;
 	}
 	
+	
+	// todo: update and delete different from insert as they dont generate ID.
 	protected Long execWriteQuery(Function<Connection, PreparedStatement> statementBuilder){
 		Connection con = null;
 		PreparedStatement statement = null;

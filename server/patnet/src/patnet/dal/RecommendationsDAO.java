@@ -1,4 +1,4 @@
-package com.neu.dbms.dao;
+package patnet.dal;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

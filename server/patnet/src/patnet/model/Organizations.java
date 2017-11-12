@@ -1,6 +1,6 @@
 package patnet.model;
 
-public class Organizations{
+public class Organizations extends BaseModel{
 	private Long Organizationid;
 	private String Name;
 	private String Address;
@@ -9,6 +9,20 @@ public class Organizations{
 	private int ZipCode;
 	private int Phone;
 	private String Location;
+	
+	public Organizations(Long organizationid, String name, String address, String city, String state, int zipCode,
+			int phone, String location) {
+		super();
+		Organizationid = organizationid;
+		Name = name;
+		Address = address;
+		City = city;
+		State = state;
+		ZipCode = zipCode;
+		Phone = phone;
+		Location = location;
+	}
+
 
 	public String getName(){
 		return Name;
