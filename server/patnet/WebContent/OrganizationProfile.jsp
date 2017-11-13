@@ -21,13 +21,14 @@
 		</c:forEach>
 	</table>
 	
-	
-<%-- 	<ul>
+	<h3>Reviews</h3>
+	<table>
 		<c:forEach items="${Reviews}" var="review">
 		    <tr>
 	    			<td>${review.getRating()}</td><td>${review.getContent()}</td>
 	    		</tr>
-		</c:forEach>
-	</ul> --%>
+    		</c:forEach>
+	</table>
+
 </body>
 </html>

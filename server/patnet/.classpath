@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/Users/ChienliMa/Code/PatientNetwork/server/patnet/WebContent/WEB-INF/lib/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="lib" path="/Users/ChienliMa/Code/PatientNetwork/server/patnet/WebContent/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="/Users/ChienliMa/Code/PatientNetwork/server/patnet/WebContent/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
@@ -16,10 +14,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-    	<classpathentry kind="output" path="build/classes"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/dilipmak/eclipse-workspace/ReviewApplication/WebContent/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/Users/dilipmak/eclipse-workspace/ReviewApplication/WebContent/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/Users/dilipmak/eclipse-workspace/ReviewApplication/WebContent/WEB-INF/lib/mysql-connector-java-5.1.36-bin.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -94,6 +94,7 @@ public class Organizations extends BaseModel{
 		HashMap<String, String> orgMap = new HashMap<String, String>();
 		orgMap.put("OrganizationId",OrganizationId.toString());
 		orgMap.put("Name",Name);
+		orgMap.put("Address",Address);
 		orgMap.put("City",City);
 		orgMap.put("State",State);
 		orgMap.put("ZipCode",ZipCode.toString());

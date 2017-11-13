@@ -1,6 +1,4 @@
 package patnet.servlet;
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,27 +12,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import patnet.dal.OrganizationReviewsDAO;
 import patnet.dal.OrganizationsDAO;
 import patnet.model.OrganizationReviews;
 import patnet.model.Organizations;
 
 @WebServlet("/OrganizationProfile")
 public class OrganizationProfile extends HttpServlet{
-	private OrganizationsDAO dao = new OrganizationsDAO();
+	private OrganizationsDAO oDao = new OrganizationsDAO();
+	private OrganizationReviewsDAO rDao = new OrganizationReviewsDAO();
 	public void doGet(HttpServletRequest req,  HttpServletResponse res) 
 			throws ServletException, IOException{
-		
-		// Map for storing messages.
+        Organizations org = oDao.getOrganizationById(new Long(req.getParameter("OrganizationId")));
         Map<String, String> messages = new HashMap<String, String>();
-        req.getAttribute("OrganizationId");
-        Organizations organizations = dao.getOrganizationById(new Long(3));
-        Organizations testOrg = new Organizations(2L, "FFORg", "good", "sea", "wa", 323232, 43434, "FF");
-        req.setAttribute("Organization", testOrg.toMap());
+        req.setAttribute("Organization", org.toMap());
        
-//        List<OrganizationReviews> reviews = new ArrayList<OrganizationReviews>();
-//        reviews.add(new OrganizationReviews(1L,  "LOL", 2L,"very good", new Date(), 5));
-//        reviews.add(new OrganizationReviews(2L, "DOTA",2L,  "very bad", new Date(), 0));
-//        req.setAttribute("Reviews", reviews);
+        List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationid());
+        req.setAttribute("Reviews", reviews);
 
         req.getRequestDispatcher("/OrganizationProfile.jsp").forward(req, res);
 	}
