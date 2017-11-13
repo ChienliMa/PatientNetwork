@@ -20,10 +20,14 @@
 	    		</tr>
 		</c:forEach>
 	</table>
-	<%-- <ul>
-		<c:forEach items=${it.reviews} var="review">
-		    ???
+	
+	
+<%-- 	<ul>
+		<c:forEach items="${Reviews}" var="review">
+		    <tr>
+	    			<td>${review.getRating()}</td><td>${review.getContent()}</td>
+	    		</tr>
 		</c:forEach>
-	</ul>  --%>
+	</ul> --%>
 </body>
 </html>
