@@ -2,6 +2,7 @@ package patnet.model;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 public class BaseModel {
 	public void update(String fieldName, Object newValue) {
