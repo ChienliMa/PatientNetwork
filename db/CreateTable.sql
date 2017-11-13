@@ -12,6 +12,9 @@ DROP TABLE IF EXISTS SurveyResult;
 DROP TABLE IF EXISTS SurveyItem;
 drop table if exists Hospitals;
 drop table if exists Organizations;
+drop table if exists SpecialtyType;
+drop table if exists PhysicianSpecialties;
+drop table if exists PlacesOfService;
 
 
 create table Organizations(
