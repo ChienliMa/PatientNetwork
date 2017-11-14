@@ -23,8 +23,8 @@ create table Organizations(
     Address varchar(255) default '',
     City varchar(255) default '',
     State varchar(2) default '',
-    ZipCode int,
-    Phone int,
+    ZipCode  varchar(255),
+    Phone  varchar(255),
     Location varchar(255) default '',
 	constraint pk_Organizations_OrganizationId primary key (OrganizationId)
 );

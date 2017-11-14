@@ -3,17 +3,19 @@ package patnet.model;
 import java.util.HashMap;
 
 public class Organizations extends BaseModel{
-	private Long OrganizationId;
-	private String Name;
-	private String Address;
-	private String City;
-	private String State;
-	private Integer ZipCode;
-	private Integer Phone;
-	private String Location;
+	private Long OrganizationId = 0L;
+	private String Name = "";
+	private String Address = "";
+	private String City = "";
+	private String State = "";
+	private String ZipCode = "";
+	private String Phone = "";
+	private String Location = "";
 	
-	public Organizations(Long organizationid, String name, String address, String city, String state, Integer zipCode,
-			Integer phone, String location) {
+	public Organizations() {}
+	
+	public Organizations(Long organizationid, String name, String address, String city, String state, String zipCode,
+			String phone, String location) {
 		super();
 		OrganizationId = organizationid;
 		Name = name;
@@ -58,19 +60,19 @@ public class Organizations extends BaseModel{
 		this.State=State;
 	}
 
-	public Integer getZipcode(){
+	public String getZipcode(){
 		return ZipCode;
 	}
 
-	public void setZipcode(Integer ZipCode){
+	public void setZipcode(String ZipCode){
 		this.ZipCode=ZipCode;
 	}
 
-	public Integer getPhone(){
+	public String getPhone(){
 		return Phone;
 	}
 
-	public void setPhone(Integer Phone){
+	public void setPhone(String Phone){
 		this.Phone=Phone;
 	}
 
@@ -92,13 +94,12 @@ public class Organizations extends BaseModel{
 	
 	public HashMap<String, String> toMap(){
 		HashMap<String, String> orgMap = new HashMap<String, String>();
-		orgMap.put("OrganizationId",OrganizationId.toString());
 		orgMap.put("Name",Name);
 		orgMap.put("Address",Address);
 		orgMap.put("City",City);
 		orgMap.put("State",State);
-		orgMap.put("ZipCode",ZipCode.toString());
-		orgMap.put("Phone",Phone.toString());
+		orgMap.put("ZipCode",ZipCode);
+		orgMap.put("Phone",Phone);
 		orgMap.put("Location",Location);
 		return orgMap;
 	}

@@ -1,7 +1,5 @@
 package patnet.servlet;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +19,10 @@ import patnet.model.Organizations;
 public class OrganizationProfile extends HttpServlet{
 	private OrganizationsDAO oDao = new OrganizationsDAO();
 	private OrganizationReviewsDAO rDao = new OrganizationReviewsDAO();
+	
 	public void doGet(HttpServletRequest req,  HttpServletResponse res) 
 			throws ServletException, IOException{
         Organizations org = oDao.getOrganizationById(new Long(req.getParameter("OrganizationId")));
-        Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("Organization", org.toMap());
        
         List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationid());
@@ -32,5 +30,4 @@ public class OrganizationProfile extends HttpServlet{
 
         req.getRequestDispatcher("/OrganizationProfile.jsp").forward(req, res);
 	}
-	
 }
