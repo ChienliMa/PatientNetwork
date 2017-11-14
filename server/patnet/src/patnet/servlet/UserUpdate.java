@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import patnet.dal.UsersDao;
 import patnet.model.Users;
 
-@WebServlet("/usercreate")
-public class UserCreate extends HttpServlet {
+@WebServlet("/userupdate")
+public class UserUpdate extends HttpServlet {
 
 	protected UsersDao usersDao;
 
@@ -29,10 +29,10 @@ public class UserCreate extends HttpServlet {
 		// Map for storing messages.
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
-		// Just render the JSP.
-		System.out.println("doget /usercreate");
+		System.out.println("doGet /userupdate");
 
-		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
+		// Just render the JSP.
+		req.getRequestDispatcher("/UserUpdate.jsp").forward(req, resp);
 	}
 
 	@Override
@@ -46,27 +46,24 @@ public class UserCreate extends HttpServlet {
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
-			// Create the BlogUser.
+			// Update the User.
 			String firstName = req.getParameter("firstname");
 			String lastName = req.getParameter("lastname");
 			String password = req.getParameter("password");
 
-			int organizationId = Integer.valueOf(req.getParameter("organizationId"));
-			int physicianId = Integer.valueOf(req.getParameter("physicianId"));
-
 			try {
-				// Exercise: parse the input for StatusLevel.
-				Users blogUser = new Users(userName, password, Users.Type.ORDINARY, organizationId, physicianId,
-						firstName, lastName);
-				System.out.println("doing post " + blogUser.toString());
-				blogUser = usersDao.create(blogUser);
-				messages.put("success", "Successfully created " + userName);
+				Users oldUser = usersDao.getUserFromUserName(userName);
+				oldUser.setFirstName(firstName);
+				oldUser.setLastName(lastName);
+				oldUser.setPassword(password);
+				usersDao.update(oldUser);
+				messages.put("success", "Successfully updated " + userName);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
 			}
 		}
 
-		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
+		req.getRequestDispatcher("/UserUpdate.jsp").forward(req, resp);
 	}
 }
