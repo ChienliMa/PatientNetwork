@@ -8,50 +8,51 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import patnet.model.Organizations;
+import patnet.model.*;
 
 
 
 public class OrganizationsDAO extends GeneralDAO{
 	private Function<ResultSet, List<Organizations>> retrivalFunction = 
 			rs -> {
-				List<Organizations> organizations = new ArrayList<Organizations>();
-				try {
-					while (rs.next()) {
-						organizations.add(new Organizations(
-								rs.getLong("OrganizationId"),
-								rs.getString("Name"),
-								rs.getString("Address"),
-								rs.getString("City"),
-								rs.getString("State"),
-								rs.getString("ZipCode"),
-								rs.getString("Phone"),
-								rs.getString("Location")));
-					} 
-				}catch (SQLException e) {
-					e.printStackTrace();
-				}
-				return organizations;
-			};
+		List<Organizations> organizations = new ArrayList<Organizations>();
+		try {
+			while (rs.next()) {
+				organizations.add(new Organizations(
+						rs.getLong("OrganizationId"),
+						rs.getString("Name"),
+						rs.getString("Address"),
+						rs.getString("City"),
+						rs.getString("State"),
+						rs.getInt("ZipCode"),
+						rs.getInt("Phone"),
+						rs.getString("Location")));
+			} 
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return organizations;
+	};
 			
 	public Organizations create(Organizations organization) {
 		Function<Connection, PreparedStatement> statementBuilder =
 				conn -> GeneralDAO.prepareStatement(conn, 
-						"insert into Organizations (Name,Address,City,State,ZipCode,Phone) "
-						+ "values (?,?,?,?,?,?)", 
+						"INSERT INTO Organizations (Name,Address,City,State,ZipCode,Phone,Location) " +
+						"  VALUES(?,?,?,?,?,?,?);", 
 						organization.getName(),
 						organization.getAddress(),
 						organization.getCity(),
 						organization.getState(),
 						organization.getZipcode(),
-						organization.getPhone());
+						organization.getPhone(),
+						organization.getLocation());
 		Long id = this.execWriteQuery(statementBuilder);
 		organization.setOrganizationid(id);
 		return organization;
 	}
 				
-	public List<Organizations> getOrganizationByFiled(String fieldName, Object fieldValue) {
-		String queryString = String.format("select * from Organizations where %s = ?", fieldName);
+	public List<Organizations> getOrganizationByField(String fieldName, Object fieldValue) {
+		String queryString = String.format("SELECT * FROM Organizations WHERE %s = ?;", fieldName);
 		Function<Connection, PreparedStatement> statementBuilder =
 				conn -> GeneralDAO.prepareStatement(conn, 
 						queryString, 
@@ -60,15 +61,18 @@ public class OrganizationsDAO extends GeneralDAO{
 	}
 	
 	public Organizations getOrganizationById(Long id) {
-		return this.getOrganizationByFiled("OrganizationId", id).get(0);
+		return this.getOrganizationByField("OrganizationId", id).get(0);
 	}
 	
-	public List<Organizations> getOrganizationByCity(String City) {
-		return this.getOrganizationByFiled("City", City);
+	public List<Organizations> getOrganizationByCity(String city) {
+		return this.getOrganizationByField("City", city);
 	}
 	
-	public List<Organizations> getOrganizationByState(Long State) {
-		return this.getOrganizationByFiled("State", State);
+	public List<Organizations> getOrganizationByState(String state) {
+		return this.getOrganizationByField("State", state);
+	}
+	public List<Organizations> getOrganizationByZipCode(int zip) {
+		return this.getOrganizationByField("ZipCode", zip);
 	}
 	
 	public Organizations deleteOrganization(Organizations organization) {

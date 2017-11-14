@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.function.Function;
-import javax.naming.NamingException;
-
 import java.sql.PreparedStatement;
 
 public class GeneralDAO {
