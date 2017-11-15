@@ -14,13 +14,17 @@
 	<h1>Update User</h1>
 	<form action="userupdate" method="post" id="myform">
 		<p>
-			<label for="username">UserName</label> <input id="username"
-				name="username" value="">
+			Hello <label for="username">${messages.username}</label>
 		</p>
+		<input id="username" name="username" type="hidden"
+			value="${messages.username}">
+
 		<p>
 			<label for="password">Password</label> <input id="password"
 				name="password" value="" type="password">
 		</p>
+
+		<!-- 		
 		<p>
 			<label for="organizationId">OrganizationId</label> <input
 				id="organizationId" name="organizationId" value="">
@@ -28,7 +32,9 @@
 		<p>
 			<label for="physicianId">PhysicianId</label> <input id="physicianId"
 				name="physicianId" value="">
-		</p>
+		</p> 
+		-->
+
 		<p>
 			<label for="firstname">FirstName</label> <input id="firstname"
 				name="firstname" value="">
@@ -45,6 +51,10 @@
 	<br />
 	<p>
 		<span id="successMessage"><b>${messages.success}</b></span>
+	</p>
+
+	<p>
+		<span id="failureMessage"><b>${messages.failure}</b></span>
 	</p>
 
 

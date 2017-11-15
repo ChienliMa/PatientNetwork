@@ -20,7 +20,7 @@
 			var usertype = $("#usertype").val();
 			console.log(usertype);
 
-			alert("before submit");
+			/* alert("before submit"); */
 
 			$("#hiddenField").val(usertype);
 			/* e.preventDefault(); */

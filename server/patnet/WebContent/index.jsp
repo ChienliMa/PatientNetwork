@@ -14,16 +14,17 @@
 
 	<br />
 	<div id="userCreate">
-		<a href="usercreate">Create User / Register </a>
+		<a href="usercreate"> Register </a>
 	</div>
 
 	<p>OR</p>
 
 	<div id="userLogin">
-		<a href="userlogin">Login</a>
+		<a href="userlogin"> Login </a>
 	</div>
 	<br />
 
+	<!-- 	
 	<p>OR</p>
 
 	<div id="userFind">
@@ -34,7 +35,8 @@
 
 	<div id="userUpdate">
 		<a href="userupdate">Update User</a>
-	</div>
+	</div> 
+	-->
 
 
 

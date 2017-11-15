@@ -133,7 +133,7 @@ public class UsersDao {
 
 	public Users update(Users user) throws SQLException {
 		String updateUserStatement = "UPDATE Users"
-				+ " SET Password=?, Type=?, OrganizationId=?, PhysicianId=?, FirstName=?, LastName=? "
+				+ " SET Password=?, Type=?, FirstName=?, LastName=? "
 				+ "WHERE Username=?";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
@@ -143,11 +143,13 @@ public class UsersDao {
 
 			updateStmt.setString(1, user.getPassword());
 			updateStmt.setString(2, user.getType().name());
-			updateStmt.setInt(3, user.getOrganizationId());
-			updateStmt.setInt(4, user.getPhysicianId());
-			updateStmt.setString(5, user.getFirstName());
-			updateStmt.setString(6, user.getLastName());
-			updateStmt.setString(7, user.getUsername());
+//			updateStmt.setInt(3, user.getOrganizationId());
+//			updateStmt.setInt(4, user.getPhysicianId());
+			updateStmt.setString(3, user.getFirstName());
+			updateStmt.setString(4, user.getLastName());
+			updateStmt.setString(5, user.getUsername());
+
+			System.out.println(updateStmt.toString());
 
 			updateStmt.executeUpdate();
 

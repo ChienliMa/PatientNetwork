@@ -29,5 +29,11 @@
 	<div id="userFind">
 		<a href="findusers">Find User</a>
 	</div>
+
+	<a
+		href="userupdate?username=<c:out value="${user.getUserName()}"/>
+			&usertype=${user.getType()}">
+		Update your information </a>
+
 </body>
 </html>

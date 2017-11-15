@@ -29,7 +29,17 @@ public class UserUpdate extends HttpServlet {
 		// Map for storing messages.
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
+		req.setAttribute("username", messages);
 		System.out.println("doGet /userupdate");
+
+		String userName = req.getParameter("username");
+
+		if (userName == null || userName.trim().isEmpty()) {
+			messages.put("failure", "Invalid UserName");
+		} else {
+			messages.put("username", userName);
+			messages.put("success", " Kindly enter updated information for " + userName);
+		}
 
 		// Just render the JSP.
 		req.getRequestDispatcher("/UserUpdate.jsp").forward(req, resp);
@@ -44,7 +54,7 @@ public class UserUpdate extends HttpServlet {
 		System.out.println(req.toString());
 		// Retrieve and validate name.
 		String userName = req.getParameter("username");
-		
+
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
