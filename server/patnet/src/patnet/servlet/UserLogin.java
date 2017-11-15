@@ -15,8 +15,8 @@ import patnet.dal.UsersDao;
 import patnet.model.Users;
 import patnet.model.Users.Type;
 
-@WebServlet("/usercreate")
-public class UserCreate extends HttpServlet {
+@WebServlet("/userlogin")
+public class UserLogin extends HttpServlet {
 
 	protected UsersDao usersDao;
 
@@ -33,7 +33,7 @@ public class UserCreate extends HttpServlet {
 		// Just render the JSP.
 		System.out.println("doget /usercreate");
 
-		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
+		req.getRequestDispatcher("/UserLogin.jsp").forward(req, resp);
 	}
 
 	@Override
@@ -48,29 +48,22 @@ public class UserCreate extends HttpServlet {
 			messages.put("success", "Invalid UserName");
 		} else {
 			// Create the BlogUser.
-			String firstName = req.getParameter("firstname");
-			String lastName = req.getParameter("lastname");
 			String password = req.getParameter("password");
-			String userType = req.getParameter("hiddenField");
-			
-			System.out.println("usertype is " + userType);
-
-			int organizationId = Integer.valueOf(req.getParameter("organizationId"));
-			int physicianId = Integer.valueOf(req.getParameter("physicianId"));
 
 			try {
-				// Exercise: parse the input for StatusLevel.
-				Users blogUser = new Users(userName, password, Type.valueOf(userType), organizationId, physicianId,
-						firstName, lastName);
-				System.out.println("doing post " + blogUser.toString());
-				blogUser = usersDao.create(blogUser);
-				messages.put("success", "Successfully created " + userName);
+				Users blogUser = usersDao.getUserFromUserName(userName);
+
+				if (password.equals(blogUser.getPassword())) {
+					messages.put("success", "Successfully logged in " + userName);
+				} else {
+					messages.put("failure", "Login Error " + userName);
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
 			}
 		}
 
-		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
+		req.getRequestDispatcher("/userprofile?username="+userName).forward(req, resp);
 	}
 }

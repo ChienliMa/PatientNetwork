@@ -41,8 +41,10 @@ public class UserUpdate extends HttpServlet {
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 
+		System.out.println(req.toString());
 		// Retrieve and validate name.
 		String userName = req.getParameter("username");
+		
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
