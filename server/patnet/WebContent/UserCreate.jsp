@@ -9,10 +9,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a User</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$('#myform').submit(function(e) {
+			console.log("here");
+
+			var usertype = $("#usertype").val();
+			console.log(usertype);
+
+			alert("before submit");
+
+			$("#hiddenField").val(usertype);
+			/* e.preventDefault(); */
+		})
+	});
+</script>
 </head>
 <body>
 	<h1>Create User</h1>
-	<form action="usercreate" method="post">
+	<form action="usercreate" method="post" id="myform">
 		<p>
 			<label for="username">UserName</label> <input id="username"
 				name="username" value="">
@@ -20,6 +38,13 @@
 		<p>
 			<label for="password">Password</label> <input id="password"
 				name="password" value="" type="password">
+		</p>
+		<p>
+			<label> Select user type </label> <select name="select" id="usertype">
+				<option value="ORDINARY" selected>Ordinary User</option>
+				<option value="ORGANIZATION">Organization User</option>
+				<option value="PHYSICIAN">Physician User</option>
+			</select>
 		</p>
 		<p>
 			<label for="organizationId">OrganizationId</label> <input
@@ -37,6 +62,8 @@
 			<label for="lastname">LastName</label> <input id="lastname"
 				name="lastname" value="">
 		</p>
+		<input type="hidden" name="hiddenField" id="hiddenField"
+			value="ORDINARY">
 		<p>
 			<input type="submit">
 		</p>

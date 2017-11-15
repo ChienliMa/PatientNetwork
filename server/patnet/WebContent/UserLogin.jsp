@@ -8,11 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Update User</title>
+<title>Login User</title>
 </head>
 <body>
-	<h1>Update User</h1>
-	<form action="userupdate" method="post" id="myform">
+	<h1>Login</h1>
+	<form action="userlogin" method="post" id="myform">
 		<p>
 			<label for="username">UserName</label> <input id="username"
 				name="username" value="">
@@ -22,33 +22,14 @@
 				name="password" value="" type="password">
 		</p>
 		<p>
-			<label for="organizationId">OrganizationId</label> <input
-				id="organizationId" name="organizationId" value="">
-		</p>
-		<p>
-			<label for="physicianId">PhysicianId</label> <input id="physicianId"
-				name="physicianId" value="">
-		</p>
-		<p>
-			<label for="firstname">FirstName</label> <input id="firstname"
-				name="firstname" value="">
-		</p>
-		<p>
-			<label for="lastname">LastName</label> <input id="lastname"
-				name="lastname" value="">
-		</p>
-		<p>
 			<input type="submit">
 		</p>
 	</form>
 	<br />
 	<br />
 	<p>
-		<span id="successMessage"><b>${messages.success}</b></span>
+		<span id="successMessage"><b>${messages.success}</b></span> <span
+			id="failureMessage"><b>${messages.failure}</b></span>
 	</p>
-
-
 </body>
-
-
 </html>
