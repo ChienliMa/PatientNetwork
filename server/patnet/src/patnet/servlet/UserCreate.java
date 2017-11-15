@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import patnet.dal.OrganizationsDAO;
 import patnet.dal.UsersDao;
+import patnet.model.Organizations;
 import patnet.model.Users;
 import patnet.model.Users.Type;
 
@@ -19,10 +21,12 @@ import patnet.model.Users.Type;
 public class UserCreate extends HttpServlet {
 
 	protected UsersDao usersDao;
+	protected OrganizationsDAO organizationsDAO;
 
 	@Override
 	public void init() throws ServletException {
 		usersDao = UsersDao.getInstance();
+		organizationsDAO = new OrganizationsDAO();
 	}
 
 	@Override
@@ -52,18 +56,35 @@ public class UserCreate extends HttpServlet {
 			String lastName = req.getParameter("lastname");
 			String password = req.getParameter("password");
 			String userType = req.getParameter("hiddenField");
-			
+
 			System.out.println("usertype is " + userType);
 
-			int organizationId = Integer.valueOf(req.getParameter("organizationId"));
-			int physicianId = Integer.valueOf(req.getParameter("physicianId"));
-
 			try {
-				// Exercise: parse the input for StatusLevel.
-				Users blogUser = new Users(userName, password, Type.valueOf(userType), organizationId, physicianId,
-						firstName, lastName);
+				Users blogUser = null;
+				if (userType.equals(Type.PHYSICIAN.name())) {
+					System.out.println("creatng physc user");
+					int physicianId = Integer.valueOf(req.getParameter("physicianId"));
+					blogUser = new Users(userName, password, Type.PHYSICIAN, firstName, lastName);
+					blogUser.setPhysicianId(physicianId);
+					blogUser = usersDao.createPhysician(blogUser);
+					messages.put("success", "Successfully created " + userName);
+				} else if (userType.equals(Type.ORGANIZATION.name())) {
+					System.out.println("creting org user");
+					String orgName = req.getParameter("organizationName");
+					Organizations org = organizationsDAO.getOrganizationByName(orgName);
+					int organizationId = org.getOrganizationid().intValue();
+					blogUser = new Users(userName, password, Type.ORGANIZATION, firstName, lastName);
+					blogUser.setOrganizationId(organizationId);
+					blogUser = usersDao.createOrganization(blogUser);
+					messages.put("success", "Successfully created " + userName);
+				} else {
+					System.out.println("creating ordinary user");
+					blogUser = new Users(userName, password, Type.ORDINARY, firstName, lastName);
+					blogUser = usersDao.createOrdinary(blogUser);
+					messages.put("success", "Successfully created " + userName);
+
+				}
 				System.out.println("doing post " + blogUser.toString());
-				blogUser = usersDao.create(blogUser);
 				messages.put("success", "Successfully created " + userName);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -71,6 +92,6 @@ public class UserCreate extends HttpServlet {
 			}
 		}
 
-		req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
+		req.getRequestDispatcher("/FindUsers.jsp").forward(req, resp);
 	}
 }

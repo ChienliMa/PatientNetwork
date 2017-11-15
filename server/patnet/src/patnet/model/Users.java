@@ -23,10 +23,13 @@ public class Users {
 		Username = username;
 	}
 
-	public Users(String username, String fn) {
+	public Users(String username, String password, Type type, String firstName, String lastName) {
 		super();
 		Username = username;
-		FirstName = fn;
+		Password = password;
+		this.type = type;
+		FirstName = firstName;
+		LastName = lastName;
 	}
 
 	public Users(String username, String password, Type type, int organizationId, int physicianId, String firstName,

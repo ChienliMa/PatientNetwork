@@ -24,7 +24,31 @@
 
 			$("#hiddenField").val(usertype);
 			/* e.preventDefault(); */
-		})
+		});
+
+		$("#usertype").change(function(e) {
+
+			console.log("toggle");
+
+			var usertype = $("#usertype").val();
+
+			console.log(usertype);
+
+			if (usertype === "ORDINARY") {
+				console.log("manager ORDINARY");
+				$("#orgdiv").hide();
+				$("#phydiv").hide();
+			} else if (usertype === "ORGANIZATION") {
+				console.log("manager ORGANIZATION");
+				$("#orgdiv").show();
+				$("#phydiv").hide();
+			} else {
+				console.log("manager phy");
+				$("#orgdiv").hide();
+				$("#phydiv").show();
+			}
+		});
+
 	});
 </script>
 </head>
@@ -46,14 +70,23 @@
 				<option value="PHYSICIAN">Physician User</option>
 			</select>
 		</p>
-		<p>
+		<!-- 		<p>
 			<label for="organizationId">OrganizationId</label> <input
 				id="organizationId" name="organizationId" value="">
-		</p>
-		<p>
-			<label for="physicianId">PhysicianId</label> <input id="physicianId"
+		</p> -->
+
+
+		<div id="orgdiv" style="display: none;">
+			<label for="organizationName">Organization Name</label> <input
+				id="organizationName" name="organizationName" value="">
+		</div>
+
+
+		<div id="phydiv" style="display: none;">
+			<label for="physicianId">PhysicianId </label> <input id="physicianId"
 				name="physicianId" value="">
-		</p>
+		</div>
+
 		<p>
 			<label for="firstname">FirstName</label> <input id="firstname"
 				name="firstname" value="">
