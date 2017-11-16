@@ -8,27 +8,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Delete a User</title>
+<title>Find a User</title>
 </head>
 <body>
-	<h1>${messages.title}</h1>
-	<form action="userdelete" method="post">
-		<p>
-		<div
-			<c:if test="${messages.disableSubmit}">style="display:none"</c:if>>
-			<label for="username">UserName</label> <input id="username"
-				name="username" value="${fn:escapeXml(param.username)}">
-		</div>
-		</p>
-		<p>
-			<span id="submitButton"
-				<c:if test="${messages.disableSubmit}">style="display:none"</c:if>>
-				<input type="submit">
-			</span>
-		</p>
-	</form>
+
 	<br />
+	<div id="userCreate">
+		<a href="usercreate"> Register </a>
+	</div>
+
+	<p>OR</p>
+
+	<div id="userLogin">
+		<a href="userlogin"> Login </a>
+	</div>
 	<br />
+
+	<p>OR</p>
+
+	<div id="userDelete">
+		<a href="userdelete"> Unregister / Delete user </a>
+	</div>
+
+	<!-- 	
+	<p>OR</p>
+
+	<div id="userFind">
+		<a href="findusers">Find User</a>
+	</div>
+
+	<p>OR</p>
+
+	<div id="userUpdate">
+		<a href="userupdate">Update User</a>
+	</div> 
+	-->
+
+
 
 </body>
 </html>

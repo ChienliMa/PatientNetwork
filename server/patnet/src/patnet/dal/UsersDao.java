@@ -30,9 +30,47 @@ public class UsersDao {
 		return instance;
 	}
 
-	public Users create(Users user) throws SQLException {
-		String insertRestaurants = "INSERT INTO Users(Username,Password,Type,OrganizationId,PhysicianId, FirstName,LastName)"
-				+ "VALUES(?,?,?,?,?,?,?);";
+	public Users createOrdinary(Users user) throws SQLException {
+		String insertRestaurants = "INSERT INTO Users(Username,Password,Type, FirstName,LastName)"
+				+ "VALUES(?,?,?,?,?);";
+		Connection connection = null;
+		PreparedStatement insertStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			insertStmt = connection.prepareStatement(insertRestaurants);
+
+			insertStmt.setString(1, user.getUsername());
+			insertStmt.setString(2, user.getPassword());
+			insertStmt.setString(3, user.getType().name());
+			insertStmt.setString(4, user.getFirstName());
+			insertStmt.setString(5, user.getLastName());
+
+			System.out.println(insertStmt.toString());
+
+			insertStmt.executeUpdate();
+
+			return user;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public Users createOrganization(Users user) throws SQLException {
+		String insertRestaurants = "INSERT INTO Users(Username,Password,Type,OrganizationId, FirstName,LastName)"
+				+ "VALUES(?,?,?,?,?,?);";
 		Connection connection = null;
 		PreparedStatement insertStmt = null;
 		try {
@@ -43,13 +81,10 @@ public class UsersDao {
 			insertStmt.setString(2, user.getPassword());
 			insertStmt.setString(3, user.getType().name());
 			insertStmt.setInt(4, user.getOrganizationId());
-			insertStmt.setInt(5, user.getPhysicianId());
-			insertStmt.setString(6, user.getFirstName());
-			insertStmt.setString(7, user.getLastName());
-			
-			
+			insertStmt.setString(5, user.getFirstName());
+			insertStmt.setString(6, user.getLastName());
+
 			System.out.println(insertStmt.toString());
-			
 
 			insertStmt.executeUpdate();
 
@@ -58,18 +93,61 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
-			if (insertStmt != null) {
-				insertStmt.close();
+		}
+	}
+
+	public Users createPhysician(Users user) throws SQLException {
+		String insertRestaurants = "INSERT INTO Users(Username,Password,Type,PhysicianId, FirstName,LastName)"
+				+ "VALUES(?,?,?,?,?,?);";
+		Connection connection = null;
+		PreparedStatement insertStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			insertStmt = connection.prepareStatement(insertRestaurants);
+
+			insertStmt.setString(1, user.getUsername());
+			insertStmt.setString(2, user.getPassword());
+			insertStmt.setString(3, user.getType().name());
+			insertStmt.setInt(4, user.getPhysicianId());
+			insertStmt.setString(5, user.getFirstName());
+			insertStmt.setString(6, user.getLastName());
+
+			System.out.println(insertStmt.toString());
+
+			insertStmt.executeUpdate();
+
+			return user;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
 
 	public Users update(Users user) throws SQLException {
-		String updateUserStatement = "UPDATE Users"
-				+ " SET Password=?, Type=?, OrganizationId=?, PhysicianId=?, FirstName=?, LastName=? "
+		String updateUserStatement = "UPDATE Users" + " SET Password=?, Type=?, FirstName=?, LastName=? "
 				+ "WHERE Username=?";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
@@ -79,11 +157,13 @@ public class UsersDao {
 
 			updateStmt.setString(1, user.getPassword());
 			updateStmt.setString(2, user.getType().name());
-			updateStmt.setInt(3, user.getOrganizationId());
-			updateStmt.setInt(4, user.getPhysicianId());
-			updateStmt.setString(5, user.getFirstName());
-			updateStmt.setString(6, user.getLastName());
-			updateStmt.setString(7, user.getUsername());
+			// updateStmt.setInt(3, user.getOrganizationId());
+			// updateStmt.setInt(4, user.getPhysicianId());
+			updateStmt.setString(3, user.getFirstName());
+			updateStmt.setString(4, user.getLastName());
+			updateStmt.setString(5, user.getUsername());
+
+			System.out.println(updateStmt.toString());
 
 			updateStmt.executeUpdate();
 
@@ -92,11 +172,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (updateStmt != null) {
-				updateStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (updateStmt != null) {
+					updateStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -130,14 +215,19 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (selectStmt != null) {
-				selectStmt.close();
-			}
-			if (results != null) {
-				results.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (selectStmt != null) {
+					selectStmt.close();
+				}
+				if (results != null) {
+					results.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return null;
@@ -172,14 +262,20 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (selectStmt != null) {
-				selectStmt.close();
-			}
-			if (results != null) {
-				results.close();
+
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (selectStmt != null) {
+					selectStmt.close();
+				}
+				if (results != null) {
+					results.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return blogUsers;
@@ -202,11 +298,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (deleteStmt != null) {
-				deleteStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (deleteStmt != null) {
+					deleteStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}

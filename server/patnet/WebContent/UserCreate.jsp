@@ -9,10 +9,52 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a User</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$('#myform').submit(function(e) {
+			console.log("here");
+
+			var usertype = $("#usertype").val();
+			console.log(usertype);
+
+			/* alert("before submit"); */
+
+			$("#hiddenField").val(usertype);
+			/* e.preventDefault(); */
+		});
+
+		$("#usertype").change(function(e) {
+
+			console.log("toggle");
+
+			var usertype = $("#usertype").val();
+
+			console.log(usertype);
+
+			if (usertype === "ORDINARY") {
+				console.log("manager ORDINARY");
+				$("#orgdiv").hide();
+				$("#phydiv").hide();
+			} else if (usertype === "ORGANIZATION") {
+				console.log("manager ORGANIZATION");
+				$("#orgdiv").show();
+				$("#phydiv").hide();
+			} else {
+				console.log("manager phy");
+				$("#orgdiv").hide();
+				$("#phydiv").show();
+			}
+		});
+
+	});
+</script>
 </head>
 <body>
-	<h1>Create BlogUser</h1>
-	<form action="usercreate" method="post">
+	<h1>Create User</h1>
+	<form action="usercreate" method="post" id="myform">
 		<p>
 			<label for="username">UserName</label> <input id="username"
 				name="username" value="">
@@ -22,13 +64,29 @@
 				name="password" value="" type="password">
 		</p>
 		<p>
-			<label for="organizationId">OrganizationId</label> <input id="organizationId"
-				name="organizationId" value="">
+			<label> Select user type </label> <select name="select" id="usertype">
+				<option value="ORDINARY" selected>Ordinary User</option>
+				<option value="ORGANIZATION">Organization User</option>
+				<option value="PHYSICIAN">Physician User</option>
+			</select>
 		</p>
-		<p>
-			<label for="physicianId">PhysicianId</label> <input id="physicianId"
+		<!-- 		<p>
+			<label for="organizationId">OrganizationId</label> <input
+				id="organizationId" name="organizationId" value="">
+		</p> -->
+
+
+		<div id="orgdiv" style="display: none;">
+			<label for="organizationName">Organization Name</label> <input
+				id="organizationName" name="organizationName" value="">
+		</div>
+
+
+		<div id="phydiv" style="display: none;">
+			<label for="physicianId">PhysicianId </label> <input id="physicianId"
 				name="physicianId" value="">
-		</p>
+		</div>
+
 		<p>
 			<label for="firstname">FirstName</label> <input id="firstname"
 				name="firstname" value="">
@@ -37,6 +95,8 @@
 			<label for="lastname">LastName</label> <input id="lastname"
 				name="lastname" value="">
 		</p>
+		<input type="hidden" name="hiddenField" id="hiddenField"
+			value="ORDINARY">
 		<p>
 			<input type="submit">
 		</p>

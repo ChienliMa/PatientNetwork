@@ -19,7 +19,7 @@ public class OrganizationsDAO extends GeneralDAO{
 		try {
 			while (rs.next()) {
 				organizations.add(new Organizations(
-						rs.getLong("OrganizationId"),
+						new Long(rs.getLong("OrganizationId")),
 						rs.getString("Name"),
 						rs.getString("Address"),
 						rs.getString("City"),
@@ -62,6 +62,10 @@ public class OrganizationsDAO extends GeneralDAO{
 	
 	public Organizations getOrganizationById(Long id) {
 		return this.getOrganizationByField("OrganizationId", id).get(0);
+	}
+	
+	public Organizations getOrganizationByName(String name) {
+		return this.getOrganizationByField("Name", name).get(0);
 	}
 	
 	public List<Organizations> getOrganizationByCity(String city) {
