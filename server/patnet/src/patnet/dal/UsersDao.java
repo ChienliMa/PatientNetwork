@@ -186,7 +186,7 @@ public class UsersDao {
 		}
 	}
 
-	public Users getUserFromUserName(String userName) throws SQLException {
+	public Users getUserFromUserName(String userName) {
 		// To build an BlogUser object, we need the Persons record, too.
 		String selectBlogUser = "SELECT Username,Password,Type,OrganizationId,PhysicianId, FirstName,LastName FROM Users WHERE Username=? ;";
 		Connection connection = null;
@@ -213,7 +213,6 @@ public class UsersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw e;
 		} finally {
 			try {
 				if (connection != null) {

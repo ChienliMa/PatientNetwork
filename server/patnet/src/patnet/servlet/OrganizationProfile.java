@@ -33,7 +33,7 @@ public class OrganizationProfile extends HttpServlet{
         Organizations org = oDao.getOrganizationById(new Long(req.getParameter("OrganizationId")));
         req.setAttribute("Organization", org);
        
-        List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationid());
+        List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationId());
         req.setAttribute("Reviews", reviews);
         
         String username = req.getParameter("UserName"); 

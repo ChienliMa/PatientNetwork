@@ -72,7 +72,7 @@ public class UserCreate extends HttpServlet {
 					System.out.println("creting org user");
 					String orgName = req.getParameter("organizationName");
 					Organizations org = organizationsDAO.getOrganizationByName(orgName);
-					int organizationId = org.getOrganizationid().intValue();
+					int organizationId = org.getOrganizationId().intValue();
 					blogUser = new Users(userName, password, Type.ORGANIZATION, firstName, lastName);
 					blogUser.setOrganizationId(organizationId);
 					blogUser = usersDao.createOrganization(blogUser);

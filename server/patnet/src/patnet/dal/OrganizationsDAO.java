@@ -43,11 +43,11 @@ public class OrganizationsDAO extends GeneralDAO{
 						organization.getAddress(),
 						organization.getCity(),
 						organization.getState(),
-						organization.getZipcode(),
+						organization.getZipCode(),
 						organization.getPhone(),
 						organization.getLocation());
 		Long id = this.execWriteQuery(statementBuilder);
-		organization.setOrganizationid(id);
+		organization.setOrganizationId(id);
 		return organization;
 	}
 				
@@ -83,7 +83,7 @@ public class OrganizationsDAO extends GeneralDAO{
 		Function<Connection, PreparedStatement> statementBuilder =
 				conn -> GeneralDAO.prepareStatement(conn, 
 						"delete from Organizations where OrganizationId = ?", 
-						organization.getOrganizationid());
+						organization.getOrganizationId());
 		
 		if (this.execWriteQuery(statementBuilder) != null) {
 			return null;
@@ -108,10 +108,10 @@ public class OrganizationsDAO extends GeneralDAO{
 								organization.getAddress(),
 								organization.getCity(),
 								organization.getState(),
-								organization.getZipcode(),
+								organization.getZipCode(),
 								organization.getPhone(),
 								organization.getLocation(),
-								organization.getOrganizationid());
+								organization.getOrganizationId());
 		this.execWriteQuery(statementBuilder);
 		return organization;
 	}
@@ -122,7 +122,7 @@ public class OrganizationsDAO extends GeneralDAO{
 				conn -> GeneralDAO.prepareStatement(conn, 
 						updateQuery, 
 						newValue,
-						organization.getOrganizationid());
+						organization.getOrganizationId());
 		
 		if (this.execWriteQuery(statementBuilder) != null) {
 			organization.update(fieldName, newValue);

@@ -40,15 +40,9 @@ public class UserProfile extends HttpServlet {
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
-			try {
-				Users user = usersDao.getUserFromUserName(userName);
-				req.setAttribute("user", user);
-				messages.put("success", "Viewwing profile for " + userName);
-
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new IOException(e1);
-			}
+			Users user = usersDao.getUserFromUserName(userName);
+			req.setAttribute("user", user);
+			messages.put("success", "Viewwing profile for " + userName);
 		}
 
 		req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);
@@ -69,15 +63,9 @@ public class UserProfile extends HttpServlet {
 		if (userName == null || userName.trim().isEmpty()) {
 			messages.put("success", "Invalid UserName");
 		} else {
-			try {
-				Users user = usersDao.getUserFromUserName(userName);
-				req.setAttribute("user", user);
-				messages.put("success", "Viewwing profile for " + userName);
-
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new IOException(e1);
-			}
+			Users user = usersDao.getUserFromUserName(userName);
+			req.setAttribute("user", user);
+			messages.put("success", "Viewwing profile for " + userName);
 		}
 
 		req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);

@@ -50,17 +50,12 @@ public class UserLogin extends HttpServlet {
 			// Create the BlogUser.
 			String password = req.getParameter("password");
 
-			try {
-				Users blogUser = usersDao.getUserFromUserName(userName);
+			Users blogUser = usersDao.getUserFromUserName(userName);
 
-				if (password.equals(blogUser.getPassword())) {
-					messages.put("success", "Successfully logged in " + userName);
-				} else {
-					messages.put("failure", "Login Error " + userName);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
+			if (password.equals(blogUser.getPassword())) {
+				messages.put("success", "Successfully logged in " + userName);
+			} else {
+				messages.put("failure", "Login Error " + userName);
 			}
 		}
 

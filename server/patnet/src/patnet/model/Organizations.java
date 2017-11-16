@@ -15,10 +15,10 @@ public class Organizations extends BaseModel {
 	public Organizations() {
 	}
 
-	public Organizations(Long organizationid, String name, String address, String city, String state, String zipCode,
+	public Organizations(Long OrganizationId, String name, String address, String city, String state, String zipCode,
 			String phone, String location) {
 		super();
-		OrganizationId = organizationid;
+		OrganizationId = OrganizationId;
 		Name = name;
 		Address = address;
 		City = city;
@@ -60,7 +60,7 @@ public class Organizations extends BaseModel {
 		this.State = State;
 	}
 
-	public String getZipcode() {
+	public String getZipCode() {
 		return ZipCode;
 	}
 
@@ -84,12 +84,12 @@ public class Organizations extends BaseModel {
 		this.Location = Location;
 	}
 
-	public Long getOrganizationid() {
+	public Long getOrganizationId() {
 		return OrganizationId;
 	}
 
-	public void setOrganizationid(Long organizationid) {
-		OrganizationId = organizationid;
+	public void setOrganizationId(Long OrganizationId) {
+		OrganizationId = OrganizationId;
 	}
 
 	public HashMap<String, String> toMap() {

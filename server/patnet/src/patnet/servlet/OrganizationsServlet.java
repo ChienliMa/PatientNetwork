@@ -46,17 +46,19 @@ public class OrganizationsServlet extends HttpServlet{
 	private void search(HttpServletRequest req,  HttpServletResponse res) {
 		
 	}
-	
+
+	// get create page
 	private void create(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {
 		Organizations org = new Organizations();
 		org.setName("New Orgnaization");
-		req.setAttribute("Organization", org.toMap());
+		req.setAttribute("Organization", org);
         req.getRequestDispatcher("/OrganizationEdit.jsp").forward(req, res);
 	}
 	
+	// get edit page
 	private void edit(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {
 		Long id = Long.parseLong(req.getParameter("OrganizationId"));
-		req.setAttribute("Organization", oDao.getOrganizationById(id).toMap());
+		req.setAttribute("Organization", oDao.getOrganizationById(id));
         req.getRequestDispatcher("/OrganizationEdit.jsp").forward(req, res);
 	}
 	
@@ -64,7 +66,7 @@ public class OrganizationsServlet extends HttpServlet{
 	public void doPut(HttpServletRequest req,  HttpServletResponse res) {
 		Organizations org = new Organizations();
 		String idstr = req.getParameter("organizationid");
-		org.setOrganizationid(idstr == null  ? null:Long.parseLong(idstr));
+		org.setOrganizationId(idstr == null  ? null:Long.parseLong(idstr));
 		org.setName(req.getParameter("Name"));
 		org.setAddress(req.getParameter("Address"));
 		org.setCity(req.getParameter("City"));
@@ -86,17 +88,19 @@ public class OrganizationsServlet extends HttpServlet{
 		org.setState(req.getParameter("State"));
 		org.setZipcode(req.getParameter("ZipCode"));
 		org.setPhone(req.getParameter("Phone"));
-		org.setOrganizationid(Long.parseLong(req.getParameter("OrganizationId")));
+		org.setOrganizationId(Long.parseLong(req.getParameter("OrganizationId")));
 		oDao.updateOrganizations(org);
 		
-        res.sendRedirect(String.format("/patnet/OrganizationProfile?OrganizationId=%d", org.getOrganizationid()));	
+		
+		
+        res.sendRedirect(String.format("/patnet/OrganizationProfile?OrganizationId=%d", org.getOrganizationId()));	
 	}
 	
 	// for delete
 	public void doDelete(HttpServletRequest req,  HttpServletResponse res) {
 		String idstr = req.getParameter("organizationid");
 		Organizations org = new Organizations();
-		org.setOrganizationid(Long.parseLong(idstr));
+		org.setOrganizationId(Long.parseLong(idstr));
 		org = oDao.deleteOrganization(org);
 	}
 }
