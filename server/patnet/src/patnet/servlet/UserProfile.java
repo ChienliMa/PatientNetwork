@@ -43,7 +43,7 @@ public class UserProfile extends HttpServlet {
 			try {
 				Users user = usersDao.getUserFromUserName(userName);
 				req.setAttribute("user", user);
-				messages.put("success", "Viewwing profile for " + userName);
+				messages.put("success", "Viewing profile for " + userName);
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -72,7 +72,7 @@ public class UserProfile extends HttpServlet {
 			try {
 				Users user = usersDao.getUserFromUserName(userName);
 				req.setAttribute("user", user);
-				messages.put("success", "Viewwing profile for " + userName);
+				messages.put("success", "Viewing profile for " + userName);
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();
