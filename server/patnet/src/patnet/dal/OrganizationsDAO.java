@@ -17,7 +17,7 @@ protected ConnectionManager connectionManager;
 	
 	// Single pattern: instantiation is limited to one object.
 	private static OrganizationsDAO instance = null;
-	protected OrganizationsDAO() {
+	public OrganizationsDAO() {
 		connectionManager = new ConnectionManager();
 	}
 	public static OrganizationsDAO getInstance() {
