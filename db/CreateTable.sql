@@ -267,7 +267,7 @@ GROUP BY `HCAHPS Measure ID`;
 
 insert into Users values('physician', 'physician', 'PHYSICIAN', null, 1003009796, null, null);
 insert into Users values('ordinary', 'ordinary', 'ORDINARY', null, null, 'foo', 'bar');
-insert into Users values('Organization', 'Organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
+insert into Users values('organization', 'organization', 'ORGANIZATION', 12, null, 'foo', 'bar');
 
 
 insert into Reviews 
@@ -276,7 +276,11 @@ values('good', 5, 'physician', 'PhysicianReview', null, 1003009796);
 
 insert into Reviews 
 (Content, Rating, UserName, Type, OrganizationId, ProviderId)
-values('bad', 4, 'Organization', 'OrganizationReview', 12, NULL);
+values('bad', 4, 'ordinary', 'OrganizationReview', 12, NULL);
+
+insert into Reviews 
+(Content, Rating, UserName, Type, OrganizationId, ProviderId)
+values('bad', 1, 'ordinary', 'OrganizationReview', 12, NULL);
 
 insert into Comments 
 (Content, UserName, ReviewId)
