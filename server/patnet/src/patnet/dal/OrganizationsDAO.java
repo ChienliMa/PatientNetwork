@@ -9,10 +9,26 @@ import java.util.List;
 import java.util.function.Function;
 
 import patnet.model.*;
-
+import patnet.dal.ConnectionManager;
 
 
 public class OrganizationsDAO extends GeneralDAO{
+	
+	protected ConnectionManager connectionManager;
+	private static OrganizationsDAO instance = null;
+	
+	public OrganizationsDAO() {
+		connectionManager = new ConnectionManager();
+	}
+	
+	public static OrganizationsDAO getInstance() {
+		if (instance == null)
+		{
+			instance = new OrganizationsDAO();
+		}
+		return instance;
+	}
+	
 	private Function<ResultSet, List<Organizations>> retrivalFunction = 
 			rs -> {
 		List<Organizations> organizations = new ArrayList<Organizations>();

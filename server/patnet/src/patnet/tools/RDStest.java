@@ -30,7 +30,7 @@ public class RDStest {
 		Users newUser = new Users("dilip", "dilipPasswordNew", Users.Type.ORDINARY, 8, 1003037037, "dilipFname",
 				"dilipLname");
 
-		 usersDao.create(newUser);
+		 usersDao.createOrdinary(newUser);
 		// usersDao.delete(newUser);
 //		usersDao.update(newUser);
 

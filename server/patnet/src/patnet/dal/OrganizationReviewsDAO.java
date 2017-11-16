@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import patnet.model.OrganizationReviews;
 import patnet.model.Reviews;
 

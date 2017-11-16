@@ -11,11 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.jni.User;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.org.apache.xpath.internal.operations.And;
-
 import patnet.dal.OrganizationReviewsDAO;
 import patnet.dal.OrganizationsDAO;
 import patnet.dal.UsersDao;
