@@ -42,7 +42,7 @@
 		<br />
 
 		<div id="physearch">
-			<a href="userdelete"> Find Physician </a>
+			<a href="FindPhysicians.jsp"> Find Physician </a>
 		</div>
 	</div>
 
