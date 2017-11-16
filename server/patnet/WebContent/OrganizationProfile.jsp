@@ -17,6 +17,8 @@
 	
 	<c:if test="${Organization.getOrganizationId().equals(User.getOrganizationId())}">
     		<a href = "/patnet/Organizations/?for=edit" >Edit</a>
+    		<a data-confirm="Are you sure?" data-method="delete" href="/patnet/Organizations" rel="nofollow">Delete</a>
+    		
 	</c:if>
 	
 	<table action="Organization/" method="PUT">

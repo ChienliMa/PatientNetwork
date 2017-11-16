@@ -11,6 +11,7 @@
 	<h1>${Organization.getName()}</h1>
 	<form action="/patnet/Organizations" method="post" id="OrganizationForm">
 	  	<p>
+	  		<input type="hidden" name="EditPropose" value="${EditPropose}" />
 	  		<input type="hidden" name="OrganizationId" value="${Organization.getOrganizationId().toString()}"/>
 	  	</p>
 	

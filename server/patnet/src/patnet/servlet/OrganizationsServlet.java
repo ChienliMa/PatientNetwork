@@ -53,6 +53,7 @@ public class OrganizationsServlet extends HttpServlet{
 		Organizations org = new Organizations();
 		org.setName("New Orgnaization");
 		req.setAttribute("Organization", org);
+		req.setAttribute("EditPropose", "create");
         req.getRequestDispatcher("/OrganizationEdit.jsp").forward(req, res);
 	}
 	
@@ -61,17 +62,25 @@ public class OrganizationsServlet extends HttpServlet{
 		Long id = Long.parseLong(req.getParameter("OrganizationId"));
 		Organizations organization = oDao.getOrganizationById(id);
 		req.setAttribute("Organization", oDao.getOrganizationById(id));
-		
+		req.setAttribute("EditPropose", "edit");
         req.getRequestDispatcher("/OrganizationEdit.jsp").forward(req, res);
 	}
 	
+	public void doPost(HttpServletRequest req,  HttpServletResponse res) throws IOException {
+		String propse = req.getParameter("EditPropose"); 
+		switch (req.getParameter("EditPropose").toString()) {
+		case "create":
+			postCreate(req, res);
+			break;
+		case "edit":
+			postEdit(req, res);
+			break;
+		}
+	}
+	
 	// for create
-	public void doPut(HttpServletRequest req,  HttpServletResponse res) {
+	public void postCreate(HttpServletRequest req,  HttpServletResponse res) throws IOException {
 		Organizations org = new Organizations();
-		String idstr = req.getParameter("organizationid");
-		
-		
-		org.setOrganizationId(Long.parseLong(idstr));
 		org.setName(req.getParameter("Name"));
 		org.setAddress(req.getParameter("Address"));
 		org.setCity(req.getParameter("City"));
@@ -79,10 +88,11 @@ public class OrganizationsServlet extends HttpServlet{
 		org.setZipcode(req.getParameter("ZipCode"));
 		org.setPhone(req.getParameter("Phone"));
 		org = oDao.create(org);
+		res.sendRedirect(String.format("/patnet/OrganizationProfile?OrganizationId=%d", org.getOrganizationId()));
 	}
 	
 	// for update
-	public void doPost(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {
+	public void postEdit(HttpServletRequest req,  HttpServletResponse res) throws IOException{
 		Organizations org = new Organizations();
 		java.util.Map<String, String[]> adr = req.getParameterMap();
 		
@@ -99,10 +109,11 @@ public class OrganizationsServlet extends HttpServlet{
 	}
 	
 	// for delete
-	public void doDelete(HttpServletRequest req,  HttpServletResponse res) {
+	public void doDelete(HttpServletRequest req,  HttpServletResponse res) throws IOException {
 		String idstr = req.getParameter("organizationid");
 		Organizations org = new Organizations();
 		org.setOrganizationId(Long.parseLong(idstr));
 		org = oDao.deleteOrganization(org);
+		res.sendRedirect(String.format("/patnet/userprofile?username=%s", req.getParameter("useranme")));
 	}
 }
