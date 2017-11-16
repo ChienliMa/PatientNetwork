@@ -13,12 +13,31 @@
 
 <body>
 	<h1>${Organization.Name}</h1>
+	
+	
+	<c:if test="${User.Orgnizationid == Organization.getOrgnizationId()}">
+    		<a href = "/patnet/Organizations/?for=edit" >Edit</a>
+	</c:if>
+	
 	<table action="Organization/" method="PUT">
-	    <c:forEach items="${Organization}" var="entry">
-	    		<tr>
-	    			<td>${entry.key}</td><td>${entry.value}</td>
-	    		</tr>
-		</c:forEach>
+		<tr>
+			<th>OrganizationId</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Phone</th>
+			<th>Location</th>
+		</tr>
+    		<tr>
+    			<td>${Organization.getOrganizationId()}</td>
+    			<td>${Organization.getName()}</td>
+    			<td>${Organization.getAddress()}</td>
+    			<td>${Organization.getCity()}</td>
+    			<td>${Organization.getState()}</td>
+    			<td>${Organization.getPhone()}</td>
+    			<td>${Organization.getLocation()}</td>
+    		</tr>
 	</table>
 	
 	<h3>Reviews</h3>
