@@ -79,18 +79,16 @@ public class OrganizationsServlet extends HttpServlet{
 		Organizations org = new Organizations();
 		java.util.Map<String, String[]> adr = req.getParameterMap();
 		
+		org.setName(req.getParameter("Location")==null?"":req.getParameter("Location"));
 		org.setName(req.getParameter("Name"));
 		org.setAddress(req.getParameter("Address"));
 		org.setCity(req.getParameter("City"));
 		org.setState(req.getParameter("State"));
 		org.setZipcode(req.getParameter("ZipCode"));
 		org.setPhone(req.getParameter("Phone"));
+		org.setOrganizationid(Long.parseLong(req.getParameter("OrganizationId")));
+		oDao.updateOrganizations(org);
 		
-		if (!req.getParameter("OrganizationId").equals("")) {
-			Long id = Long.parseLong(req.getParameter("OrganizationId"));
-		} else {
-			org = oDao.create(org);
-		}
         res.sendRedirect(String.format("/patnet/OrganizationProfile?OrganizationId=%d", org.getOrganizationid()));	
 	}
 	

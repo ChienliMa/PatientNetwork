@@ -24,8 +24,8 @@ public class OrganizationsDAO extends GeneralDAO{
 						rs.getString("Address"),
 						rs.getString("City"),
 						rs.getString("State"),
-						rs.getInt("ZipCode"),
-						rs.getInt("Phone"),
+						rs.getString("ZipCode"),
+						rs.getString("Phone"),
 						rs.getString("Location")));
 			} 
 		}catch (SQLException e) {
@@ -84,6 +84,31 @@ public class OrganizationsDAO extends GeneralDAO{
 		if (this.execWriteQuery(statementBuilder) != null) {
 			return null;
 		}
+		return organization;
+	}
+	
+	public Organizations updateOrganizations(Organizations organization) {
+		Function<Connection, PreparedStatement> statementBuilder = 
+				conn -> GeneralDAO.prepareStatement(conn, 
+								"update Organizations set"
+								+ "Name = ?,"
+								+ "Address = ?,"
+								+ "City = ?,"
+								+ "State = ?,"
+								+ "ZipCode = ?,"
+								+ "Phone = ?,"
+								+ "Location = ? "
+								+ "where OrganizationId = ?"
+								+ "", 
+								organization.getName(),
+								organization.getAddress(),
+								organization.getCity(),
+								organization.getState(),
+								organization.getZipcode(),
+								organization.getPhone(),
+								organization.getLocation(),
+								organization.getOrganizationid());
+		this.execWriteQuery(statementBuilder);
 		return organization;
 	}
 	
