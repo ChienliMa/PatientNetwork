@@ -1,1 +1,4 @@
 .DS_Store
+server/patnet/bin/
+server/patnet/build/
+server/patnet/.settings/
