@@ -1,5 +1,8 @@
 package patnet.servlet;
 
+import patnet.dal.*;
+import patnet.model.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,9 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import patnet.dal.*;
-import patnet.model.*;
 
 @WebServlet("/physiciancreate")
 public class PhysicianCreate extends HttpServlet {

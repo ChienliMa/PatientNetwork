@@ -13,20 +13,6 @@ import patnet.model.*;
 
 
 public class OrganizationsDAO extends GeneralDAO{
-protected ConnectionManager connectionManager;
-	
-	// Single pattern: instantiation is limited to one object.
-	private static OrganizationsDAO instance = null;
-	public OrganizationsDAO() {
-		connectionManager = new ConnectionManager();
-	}
-	public static OrganizationsDAO getInstance() {
-		if(instance == null) {
-			instance = new OrganizationsDAO();
-		}
-		return instance;
-	}
-	
 	private Function<ResultSet, List<Organizations>> retrivalFunction = 
 			rs -> {
 		List<Organizations> organizations = new ArrayList<Organizations>();

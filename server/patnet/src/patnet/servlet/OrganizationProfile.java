@@ -25,13 +25,13 @@ import patnet.model.Users;
 
 @WebServlet("/OrganizationProfile")
 public class OrganizationProfile extends HttpServlet{
-	private OrganizationsDAO oDao = OrganizationsDAO.getInstance();
+	private OrganizationsDAO oDao = new OrganizationsDAO();
 	private OrganizationReviewsDAO rDao = new OrganizationReviewsDAO();
 	private UsersDao uDao = UsersDao.getInstance();
 	
 	public void doGet(HttpServletRequest req,  HttpServletResponse res) 
 			throws ServletException, IOException{
-        Organizations org = oDao.getOrganizationById(Long.parseLong(req.getParameter("OrganizationId")));
+        Organizations org = oDao.getOrganizationById(new Long(req.getParameter("OrganizationId")));
         req.setAttribute("Organization", org);
        
         List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationId());
@@ -40,9 +40,9 @@ public class OrganizationProfile extends HttpServlet{
         String username = req.getParameter("UserName");
         Users user = null;
         if (username != null && username.length() > 0) {
-    		user = uDao.getUserFromUserName(username);
+        		user = uDao.getUserFromUserName(username);
         } else {
-    		user = new Users(username);
+        		user = new Users(username);
         }
         req.setAttribute("User", user);
         

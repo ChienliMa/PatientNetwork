@@ -68,17 +68,17 @@ public class FindPhysicians extends HttpServlet {
         if (providerId < 0) {
             messages.put("success", "Please enter a valid name.");
         } else {
-    		// Retrieve physicians, and store as a message.
-        	try {
-            	physician = physiciansDao.getPhysicianById(providerId);
+        		// Retrieve physicians, and store as a message.
+	        	try {
+	            	physician = physiciansDao.getPhysicianById(providerId);
 	        } catch (SQLException e) {
     				e.printStackTrace();
     				throw new IOException(e);
             }
-        	messages.put("success", "Displaying results for " + providerId);
-        	// Save the previous search term, so it can be used as the default
-        	// in the input box when rendering FindUsers.jsp.
-        	messages.put("previousFirstName", providerId + "");
+	        	messages.put("success", "Displaying results for " + providerId);
+	        	// Save the previous search term, so it can be used as the default
+	        	// in the input box when rendering FindUsers.jsp.
+	        	messages.put("previousFirstName", providerId + "");
         }
         req.setAttribute("physician", physician);
         
