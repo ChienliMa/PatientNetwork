@@ -26,7 +26,7 @@ public class UserCreate extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		usersDao = UsersDao.getInstance();
-		organizationsDAO = new OrganizationsDAO();
+		organizationsDAO = OrganizationsDAO.getInstance();
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class UserProfile extends HttpServlet {
 		} else {
 			Users user = usersDao.getUserFromUserName(userName);
 			req.setAttribute("user", user);
-			messages.put("success", "Viewwing profile for " + userName);
+			messages.put("success", "Viewing profile for " + userName);
 		}
 
 		req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);
@@ -54,7 +54,7 @@ public class UserProfile extends HttpServlet {
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		// Just render the JSP.
-		System.out.println("doget /userprofile");
+		System.out.println("dopost /userprofile");
 
 		req.setAttribute("messages", messages);
 
@@ -65,7 +65,8 @@ public class UserProfile extends HttpServlet {
 		} else {
 			Users user = usersDao.getUserFromUserName(userName);
 			req.setAttribute("user", user);
-			messages.put("success", "Viewwing profile for " + userName);
+			System.out.println("HERE <> " + user.toString());
+			messages.put("success", "Viewing profile for " + userName);
 		}
 
 		req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);
