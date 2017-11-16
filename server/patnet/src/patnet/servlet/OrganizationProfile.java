@@ -25,7 +25,7 @@ import patnet.model.Users;
 
 @WebServlet("/OrganizationProfile")
 public class OrganizationProfile extends HttpServlet{
-	private OrganizationsDAO oDao = new OrganizationsDAO();
+	private OrganizationsDAO oDao = OrganizationsDAO.getInstance();
 	private OrganizationReviewsDAO rDao = new OrganizationReviewsDAO();
 	private UsersDao uDao = UsersDao.getInstance();
 	
