@@ -33,6 +33,7 @@ public class GeneralDAO {
 		} catch (SQLException e) {
 			// TODO: handle exception
 		}
+		System.out.print(statement.toString());
 		return statement;
 	}
 	

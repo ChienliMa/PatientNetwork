@@ -18,7 +18,7 @@ public class Organizations extends BaseModel {
 	public Organizations(Long OrganizationId, String name, String address, String city, String state, String zipCode,
 			String phone, String location) {
 		super();
-		OrganizationId = OrganizationId;
+		this.OrganizationId = OrganizationId;
 		Name = name;
 		Address = address;
 		City = city;
@@ -89,7 +89,7 @@ public class Organizations extends BaseModel {
 	}
 
 	public void setOrganizationId(Long OrganizationId) {
-		OrganizationId = OrganizationId;
+		this.OrganizationId = OrganizationId;
 	}
 
 	public HashMap<String, String> toMap() {

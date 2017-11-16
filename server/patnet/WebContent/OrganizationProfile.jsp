@@ -8,14 +8,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>${Organization.Name} </title>
+<title>${Organization.getName()} </title>
 </head>
 
 <body>
-	<h1>${Organization.Name}</h1>
+	<h1>${Organization.getName()}</h1>
 	
 	
-	<c:if test="${User.Orgnizationid == Organization.getOrgnizationId()}">
+	<c:if test="${Organization.getOrganizationId().equals(User.getOrganizationId())}">
     		<a href = "/patnet/Organizations/?for=edit" >Edit</a>
 	</c:if>
 	

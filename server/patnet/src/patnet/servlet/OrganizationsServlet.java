@@ -58,15 +58,19 @@ public class OrganizationsServlet extends HttpServlet{
 	// get edit page
 	private void edit(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {
 		Long id = Long.parseLong(req.getParameter("OrganizationId"));
+		Organizations organization = oDao.getOrganizationById(id);
 		req.setAttribute("Organization", oDao.getOrganizationById(id));
+		
         req.getRequestDispatcher("/OrganizationEdit.jsp").forward(req, res);
 	}
 	
-	// for update
+	// for create
 	public void doPut(HttpServletRequest req,  HttpServletResponse res) {
 		Organizations org = new Organizations();
 		String idstr = req.getParameter("organizationid");
-		org.setOrganizationId(idstr == null  ? null:Long.parseLong(idstr));
+		
+		
+		org.setOrganizationId(Long.parseLong(idstr));
 		org.setName(req.getParameter("Name"));
 		org.setAddress(req.getParameter("Address"));
 		org.setCity(req.getParameter("City"));
@@ -76,7 +80,7 @@ public class OrganizationsServlet extends HttpServlet{
 		org = oDao.create(org);
 	}
 	
-	// for insert
+	// for update
 	public void doPost(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {
 		Organizations org = new Organizations();
 		java.util.Map<String, String[]> adr = req.getParameterMap();
@@ -87,12 +91,9 @@ public class OrganizationsServlet extends HttpServlet{
 		org.setCity(req.getParameter("City"));
 		org.setState(req.getParameter("State"));
 		org.setZipcode(req.getParameter("ZipCode"));
-		org.setPhone(req.getParameter("Phone"));
+		org.setPhone(req.getParameter("Phone")); 
 		org.setOrganizationId(Long.parseLong(req.getParameter("OrganizationId")));
 		oDao.updateOrganizations(org);
-		
-		
-		
         res.sendRedirect(String.format("/patnet/OrganizationProfile?OrganizationId=%d", org.getOrganizationId()));	
 	}
 	

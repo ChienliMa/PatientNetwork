@@ -19,7 +19,7 @@ public class OrganizationsDAO extends GeneralDAO{
 		try {
 			while (rs.next()) {
 				organizations.add(new Organizations(
-						new Long(rs.getLong("OrganizationId")),
+						rs.getLong("OrganizationId"),
 						rs.getString("Name"),
 						rs.getString("Address"),
 						rs.getString("City"),
@@ -94,7 +94,7 @@ public class OrganizationsDAO extends GeneralDAO{
 	public Organizations updateOrganizations(Organizations organization) {
 		Function<Connection, PreparedStatement> statementBuilder = 
 				conn -> GeneralDAO.prepareStatement(conn, 
-								"update Organizations set"
+								"update Organizations set "
 								+ "Name = ?,"
 								+ "Address = ?,"
 								+ "City = ?,"
@@ -102,7 +102,7 @@ public class OrganizationsDAO extends GeneralDAO{
 								+ "ZipCode = ?,"
 								+ "Phone = ?,"
 								+ "Location = ? "
-								+ "where OrganizationId = ?"
+								+ " where OrganizationId = ?"
 								+ "", 
 								organization.getName(),
 								organization.getAddress(),

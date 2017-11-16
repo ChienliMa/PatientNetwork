@@ -21,6 +21,7 @@ import patnet.dal.OrganizationsDAO;
 import patnet.dal.UsersDao;
 import patnet.model.OrganizationReviews;
 import patnet.model.Organizations;
+import patnet.model.Users;
 
 @WebServlet("/OrganizationProfile")
 public class OrganizationProfile extends HttpServlet{
@@ -36,12 +37,14 @@ public class OrganizationProfile extends HttpServlet{
         List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationId());
         req.setAttribute("Reviews", reviews);
         
-        String username = req.getParameter("UserName"); 
+        String username = req.getParameter("UserName");
+        Users user = null;
         if (username != null && username.length() > 0) {
-        		req.setAttribute("User", uDao.getUserFromUserName(username));
+        		user = uDao.getUserFromUserName(username);
         } else {
-        		req.setAttribute("User", new User());
+        		user = new Users(username);
         }
+        req.setAttribute("User", user);
         
         req.getRequestDispatcher("/OrganizationProfile.jsp").forward(req, res);
 	}
