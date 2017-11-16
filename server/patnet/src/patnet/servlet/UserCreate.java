@@ -92,6 +92,6 @@ public class UserCreate extends HttpServlet {
 			}
 		}
 
-		req.getRequestDispatcher("/FindUsers.jsp").forward(req, resp);
+		req.getRequestDispatcher("/userprofile?username="+userName).forward(req, resp);
 	}
 }

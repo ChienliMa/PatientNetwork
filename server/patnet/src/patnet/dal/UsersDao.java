@@ -54,11 +54,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (insertStmt != null) {
-				insertStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -88,11 +93,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (insertStmt != null) {
-				insertStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -122,18 +132,22 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (insertStmt != null) {
-				insertStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (insertStmt != null) {
+					insertStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
 
 	public Users update(Users user) throws SQLException {
-		String updateUserStatement = "UPDATE Users"
-				+ " SET Password=?, Type=?, FirstName=?, LastName=? "
+		String updateUserStatement = "UPDATE Users" + " SET Password=?, Type=?, FirstName=?, LastName=? "
 				+ "WHERE Username=?";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
@@ -143,8 +157,8 @@ public class UsersDao {
 
 			updateStmt.setString(1, user.getPassword());
 			updateStmt.setString(2, user.getType().name());
-//			updateStmt.setInt(3, user.getOrganizationId());
-//			updateStmt.setInt(4, user.getPhysicianId());
+			// updateStmt.setInt(3, user.getOrganizationId());
+			// updateStmt.setInt(4, user.getPhysicianId());
 			updateStmt.setString(3, user.getFirstName());
 			updateStmt.setString(4, user.getLastName());
 			updateStmt.setString(5, user.getUsername());
@@ -158,11 +172,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (updateStmt != null) {
-				updateStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (updateStmt != null) {
+					updateStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -196,14 +215,19 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (selectStmt != null) {
-				selectStmt.close();
-			}
-			if (results != null) {
-				results.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (selectStmt != null) {
+					selectStmt.close();
+				}
+				if (results != null) {
+					results.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return null;
@@ -238,14 +262,20 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (selectStmt != null) {
-				selectStmt.close();
-			}
-			if (results != null) {
-				results.close();
+
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (selectStmt != null) {
+					selectStmt.close();
+				}
+				if (results != null) {
+					results.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 		return blogUsers;
@@ -268,11 +298,16 @@ public class UsersDao {
 			e.printStackTrace();
 			throw e;
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
-			if (deleteStmt != null) {
-				deleteStmt.close();
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (deleteStmt != null) {
+					deleteStmt.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}

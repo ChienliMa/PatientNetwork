@@ -24,6 +24,12 @@
 	</div>
 	<br />
 
+	<p>OR</p>
+
+	<div id="userDelete">
+		<a href="userdelete"> Unregister / Delete user </a>
+	</div>
+
 	<!-- 	
 	<p>OR</p>
 
