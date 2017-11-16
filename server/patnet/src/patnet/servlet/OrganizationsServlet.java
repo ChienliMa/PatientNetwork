@@ -44,6 +44,7 @@ public class OrganizationsServlet extends HttpServlet{
 	}
 	
 	private void search(HttpServletRequest req,  HttpServletResponse res) {
+		System.out.println("search organization");
 		
 	}
 

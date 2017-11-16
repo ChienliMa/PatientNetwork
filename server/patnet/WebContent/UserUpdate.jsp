@@ -18,7 +18,6 @@
 		</p>
 		<input id="username" name="username" type="hidden"
 			value="${messages.username}">
-
 		<p>
 			<label for="password">Password</label> <input id="password"
 				name="password" value="" type="password">
