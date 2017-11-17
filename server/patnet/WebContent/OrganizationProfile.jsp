@@ -34,6 +34,7 @@
 	<h2>Write Reviews</h2>    
          <form action="/patnet/OrganizationReviews" method="post" id="OrganizationForm">
              <p>
+             	<input type="hidden" name="method" value="create"/>
                  <input type="hidden" name="Username" value="${Username}"/>
                  <input type="hidden" name="OrganizationId" value="${Organization.getOrganizationId()}"/>
              </p>
@@ -60,7 +61,7 @@
 					<th>edit</th>
 					<td>
 						<a href="/patnet/OrganizationReviews?method=edit&ReviewId=${review.getReviewId()}">Edit</a>
-						<a href="/patnet/OrganizationReviews?method=delete&ReviewId=${review.getReviewId()}&OrganizationId=${Organization.getOrganizationId()}">Delete</a>
+						<a href="/patnet/OrganizationReviews?method=delete&ReviewId=${review.getReviewId()}&OrganizationId=${Organization.getOrganizationId()}&Username=${Username}">Delete</a>
 					</td>
 					</tr>
 				</c:if>  
