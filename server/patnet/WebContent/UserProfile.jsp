@@ -9,6 +9,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User profile</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+
+		console.log("toggle");
+
+		var usertype = $("#usertype").val();
+
+		console.log(usertype);
+
+		if (usertype === "ORDINARY") {
+			console.log("manager ORDINARY");
+			$("#organizationProfile").hide();
+			$("#physicianProfile").hide();
+		} else if (usertype === "ORGANIZATION") {
+			console.log("manager ORGANIZATION");
+			$("#organizationProfile").show();
+			$("#physicianProfile").hide();
+		} else {
+			console.log("manager phy");
+			$("#organizationProfile").hide();
+			$("#physicianProfile").show();
+		}
+	});
+</script>
 </head>
 <body>
 	<h1>User profile</h1>
@@ -26,17 +53,37 @@
 		<span id="successMessage"><b>${messages.success}</b></span>
 	</p>
 
+	<input id="usertype" name="usertype" value="${user.getType()}"
+		type="hidden">
+
+	<div>
+		<div id="organizationProfile" style="display: none;">
+			<a
+				href="OrganizationProfile?OrganizationId=<c:out value="${user.getOrganizationId()}"/>">
+				View your Organization Profile </a>
+		</div>
+
+		<br />
+
+		<div id="physicianProfile" style="display: none;">
+			<a
+				href="OrganizationProfile?PhysicianId=<c:out value="${user.getPhysicianId()}"/>">
+				#TODO View your Physician profile </a>
+		</div>
+
+	</div>
+
 	<p>
 		<a
 			href="userupdate?username=<c:out value="${user.getUserName()}"/>
 			&usertype=${user.getType()}">
-			Update your information </a>
+			Update your user information </a>
 	</p>
 	<br />
 
 	<div id="ordinaryDiv">
 		<div id="orgsearch">
-			<a href="userdelete"> Find Organization </a>
+			<a href="FindOrganizations.jsp"> Find Organization </a>
 		</div>
 
 		<br />
