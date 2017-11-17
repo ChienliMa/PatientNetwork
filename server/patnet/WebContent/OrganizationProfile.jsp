@@ -15,9 +15,9 @@
 	<h1>${Organization.getName()}</h1>
 	
 	
-	<c:if test="${Organization.getOrganizationId().equals(User.getOrganizationId())}">
-    		<a href = "/patnet/Organizations/?for=edit" >Edit</a>
-	</c:if>
+	
+    	<a href = "/patnet/Organizations?for=edit&OrganizationId=${Organization.getOrganizationId()}" >Edit</a>
+    	<a href = "/patnet/Organizations?for=delete&Username=${Username}&OrganizationId=${Organization.getOrganizationId()}" >delete</a>
 	
 	<table border="1">
 		<tbody>

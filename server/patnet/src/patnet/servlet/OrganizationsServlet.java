@@ -40,9 +40,20 @@ public class OrganizationsServlet extends HttpServlet{
 		case "edit":
 			edit(req, res);
 			break;
+		case "delete":
+			delete(req, res);
+			break;
 		}
 	}
 	
+	private void delete(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Organizations org = new Organizations();
+		Long id = Long.parseLong(req.getParameter("OrganizationId"));
+		org.setOrganizationId(id);
+		oDao.deleteOrganization(org);
+		res.sendRedirect(String.format("/patnet/userprofile?username=%s", req.getParameter("Username")));
+	}
+
 	private void search(HttpServletRequest req,  HttpServletResponse res) {
 		System.out.println("search organization");
 		
