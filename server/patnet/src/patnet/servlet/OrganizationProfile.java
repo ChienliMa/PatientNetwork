@@ -26,7 +26,7 @@ public class OrganizationProfile extends HttpServlet{
 	
 	public void doGet(HttpServletRequest req,  HttpServletResponse res) 
 			throws ServletException, IOException{
-        Organizations org = oDao.getOrganizationById(new Long(req.getParameter("OrganizationId")));
+        Organizations org = oDao.getOrganizationById(Long.parseLong(req.getParameter("OrganizationId")));
         req.setAttribute("Organization", org);
        
         List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationId());

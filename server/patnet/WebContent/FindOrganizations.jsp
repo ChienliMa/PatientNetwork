@@ -41,7 +41,9 @@
 	
 		<c:forEach items="${organizations}" var="organization" >
 		<tr>
-			<td><c:out value="${organization.getOrganizationId()}" /></td>
+			<td><a href="OrganizationProfile?OrganizationId=<c:out value="${organization.getOrganizationId()}" />">
+				<c:out value="${organization.getOrganizationId()}" /></a>
+			</td>
 			<td><c:out value="${organization.getName()}" /></td>
 			<td><c:out value="${organization.getAddress()}" /></td>
 			<td><c:out value="${organization.getCity()}" /></td>
