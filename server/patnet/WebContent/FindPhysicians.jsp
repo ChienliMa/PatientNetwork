@@ -24,7 +24,8 @@
 		</p>
 	</form>
 	<br/>
-	<div id="physicianCreate"><a href="physiciancreate">Create Physician</a></div>
+	<div id="physicianCreate"><a href="physiciancreate">Create a Physician</a></div>
+	<div id="physicianReviewCreate"><a href="physicianreviewcreate">Create a Physician Review</a></div>
 	<br/>
 	<h1>Matching Physician</h1>
         <table border="1">
@@ -41,6 +42,9 @@
                 <th>State</th>
                 <th>PrimarySpecialty</th>
                 <th>SecondarySpecialties</th>
+                <th>Delete a Physician</th>
+                <th>update a Physician</th>
+                <th>Review</th>
             </tr>
             
             <tr>
@@ -56,10 +60,9 @@
                 <td><c:out value="${physician.getState()}" /></td>
                 <td><c:out value="${physician.getPrimarySpecialty()}" /></td>
                 <td><c:out value="${physician.getSecondarySpecialties()}" /></td>
+                <td><a href="physiciandelete?providerid=<c:out value="${physician.getProviderId()}"/>">Delete</a></td>
+                <td><a href="physicianupdate?providerid=<c:out value="${physician.getProviderId()}"/>">Update</a></td>
+                <td><a href="physicianreviewdisplay?providerid=<c:out value="${physician.getProviderId()}"/>">Review</a></td>
             </tr>
-            <%-- <c:forEach items="${physicians}" var="physician" >
-                
-            </c:forEach> --%>
-       </table>
 </body>
 </html>
