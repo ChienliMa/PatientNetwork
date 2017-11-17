@@ -59,4 +59,27 @@ public class OrganizationReviewsDAO  extends GeneralDAO{
 						review.getOrganizationId());	
 		this.execWriteQuery(provider);
 	}
+
+	public OrganizationReviews getReviewById(Long id) {
+		List<OrganizationReviews> reviews = new ArrayList();
+		Function<Connection, PreparedStatement> provider = 
+				conn -> GeneralDAO.prepareStatement(conn,
+						"select * from Reviews where Type = 'OrganizationReview' and ReviewId = ?", 
+						id);
+		return this.<List<OrganizationReviews>>execReadQuery(provider, retrivalFunction).get(0);
+	}
+	
+	public OrganizationReviews update(OrganizationReviews review) {
+		Function<Connection, PreparedStatement> provider = 
+				conn -> GeneralDAO.prepareStatement(conn,
+						"update Reviews set"
+						+ " Content = ?, "
+						+ "Rating = ? "
+						+ "where ReviewId = ?",
+						review.getContent(),
+						review.getRating(),
+						review.getReviewId());	
+		this.execWriteQuery(provider);
+		return null;
+	}
 }

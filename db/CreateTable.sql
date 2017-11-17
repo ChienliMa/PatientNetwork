@@ -99,7 +99,7 @@ Create table Users(
 
 Create table Reviews(
   ReviewId int auto_increment,
-  Created timestamp default current_timestamp,
+  Created timestamp ,
   Content text,
   Rating int,
   UserName varchar(55),

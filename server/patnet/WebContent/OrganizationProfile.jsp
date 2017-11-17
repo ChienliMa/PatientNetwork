@@ -34,7 +34,7 @@
 	<h2>Write Reviews</h2>    
          <form action="/patnet/OrganizationReviews" method="post" id="OrganizationForm">
              <p>
-                 <input type="hidden" name="Username" value="${User.getUsername()}"/>
+                 <input type="hidden" name="Username" value="${Username}"/>
                  <input type="hidden" name="OrganizationId" value="${Organization.getOrganizationId()}"/>
              </p>
               <p>
@@ -49,16 +49,18 @@
          <button type="submit" form="OrganizationForm" value="Submit">Submit</button>
     
 	<h2>Reviews</h2>
+	
 		<c:forEach items="${Reviews}" var="review">
 			<table border="1">
 				<tr><th>UserName</th><td>${review.getUsername()}</td></tr>
 				<tr><th>Rating</th><td>${review.getRating()}</td></tr>
 				<tr><th>Content</th><td>${review.getContent()}</td></tr>
-				<c:if test="${User.getUsername().equals(review.getUsername())}">
+				<c:if test="${Username.equals(review.getUsername())}">
 				<tr>
 					<th>edit</th>
 					<td>
-						<a href="/patnet/OrganizationReviews?method=edit&ReviewId=${review.getReviewId()}&OrganizationId=${Organization.getOrganizationId()}">Edit</a>
+						<a href="/patnet/OrganizationReviews?method=edit&ReviewId=${review.getReviewId()}">Edit</a>
+						<a href="/patnet/OrganizationReviews?method=delete&ReviewId=${review.getReviewId()}&OrganizationId=${Organization.getOrganizationId()}">Delete</a>
 					</td>
 					</tr>
 				</c:if>  

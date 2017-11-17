@@ -37,14 +37,7 @@ public class OrganizationProfile extends HttpServlet{
         List<OrganizationReviews> reviews = rDao.getOrganizationReviewsByOrgId(org.getOrganizationId());
         req.setAttribute("Reviews", reviews);
         
-        String username = req.getParameter("UserName");
-        Users user = null;
-        if (username != null && username.length() > 0) {
-        		user = uDao.getUserFromUserName(username);
-        } else {
-        		user = new Users(username);
-        }
-        req.setAttribute("User", user);
+        req.setAttribute("Username", req.getParameter("Username"));
         
         req.getRequestDispatcher("/OrganizationProfile.jsp").forward(req, res);
 	}
