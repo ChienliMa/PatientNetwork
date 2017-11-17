@@ -64,11 +64,11 @@
 
 		<br />
 
-		<div id="physicianProfile" style="display: none;">
+<%-- 		<div id="physicianProfile" style="display: none;">
 			<a
 				href="OrganizationProfile?PhysicianId=<c:out value="${user.getPhysicianId()}"/>">
 				#TODO View your Physician profile </a>
-		</div>
+		</div> --%>
 
 	</div>
 
