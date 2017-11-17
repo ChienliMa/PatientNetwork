@@ -99,7 +99,7 @@ Create table Users(
 
 Create table Reviews(
   ReviewId int auto_increment,
-  Created timestamp,
+  Created timestamp default current_timestamp,
   Content text,
   Rating int,
   UserName varchar(55),
@@ -280,7 +280,7 @@ values('bad', 4, 'ordinary', 'OrganizationReview', 12, NULL);
 
 insert into Reviews 
 (Content, Rating, UserName, Type, OrganizationId, ProviderId)
-values('bad', 1, 'ordinary', 'OrganizationReview', 12, NULL);
+values('bad', 1, 'physician', 'OrganizationReview', 12, NULL);
 
 insert into Comments 
 (Content, UserName, ReviewId)

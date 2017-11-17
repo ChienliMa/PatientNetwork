@@ -19,35 +19,53 @@
     		<a href = "/patnet/Organizations/?for=edit" >Edit</a>
 	</c:if>
 	
-	<table action="Organization/" method="PUT">
-		<tr>
-			<th>OrganizationId</th>
-			<th>Name</th>
-			<th>Address</th>
-			<th>City</th>
-			<th>State</th>
-			<th>Phone</th>
-			<th>Location</th>
-		</tr>
-    		<tr>
-    			<td>${Organization.getOrganizationId()}</td>
-    			<td>${Organization.getName()}</td>
-    			<td>${Organization.getAddress()}</td>
-    			<td>${Organization.getCity()}</td>
-    			<td>${Organization.getState()}</td>
-    			<td>${Organization.getPhone()}</td>
-    			<td>${Organization.getLocation()}</td>
-    		</tr>
+	<table border="1">
+		<tbody>
+				<tr>	<th>OrganizationId</th><td>${Organization.getOrganizationId()}</td></tr>
+				<tr><th>Name</th><td>${Organization.getName()}</td></tr>
+				<tr><th>Address</th><td>${Organization.getAddress()}</td></tr>
+				<tr><th>City</th><td>${Organization.getCity()}</td></tr>
+				<tr><th>State</th><td>${Organization.getState()}</td></tr>
+				<tr><th>Phone</th><td>${Organization.getPhone()}</td></tr>
+				<tr><th>Location</th><td>${Organization.getLocation()}</td></tr>
+		</tbody>
 	</table>
 	
-	<h3>Reviews</h3>
-	<table>
+	<h2>Write Reviews</h2>    
+         <form action="/patnet/OrganizationReviews" method="post" id="OrganizationForm">
+             <p>
+                 <input type="hidden" name="Username" value="${User.getUsername()}"/>
+                 <input type="hidden" name="OrganizationId" value="${Organization.getOrganizationId()}"/>
+             </p>
+              <p>
+                  <label>Rating</label>
+                  <input id="Rating" name="Rating" value="${review.getRating()}">
+              </p>
+              <p>
+                  <label>Content</label>
+                  <input id="Content" name="Content" value="${review.getContent()}">
+              </p>
+         </form>
+         <button type="submit" form="OrganizationForm" value="Submit">Submit</button>
+    
+	<h2>Reviews</h2>
 		<c:forEach items="${Reviews}" var="review">
-		    <tr>
-	    			<td>${review.getRating()}</td><td>${review.getContent()}</td>
-	    		</tr>
-    		</c:forEach>
-	</table>
+			<table border="1">
+				<tr><th>UserName</th><td>${review.getUsername()}</td></tr>
+				<tr><th>Rating</th><td>${review.getRating()}</td></tr>
+				<tr><th>Content</th><td>${review.getContent()}</td></tr>
+				<c:if test="${User.getUsername().equals(review.getUsername())}">
+				<tr>
+					<th>edit</th>
+					<td>
+						<a href="/patnet/OrganizationReviews?method=edit&ReviewId=${review.getReviewId()}&OrganizationId=${Organization.getOrganizationId()}">Edit</a>
+					</td>
+					</tr>
+				</c:if>  
+			</table>
+			</br>
+ 		</c:forEach>
+	
 
 </body>
 </html>
