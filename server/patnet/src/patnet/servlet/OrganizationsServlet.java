@@ -1,32 +1,20 @@
 package patnet.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oracle.jrockit.jfr.RequestableEvent;
-import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry.Entry;
-import com.sun.corba.se.spi.orb.StringPair;
-import com.sun.javafx.collections.MappingChange.Map;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
-import jdk.nashorn.internal.runtime.regexp.joni.SearchAlgorithm;
-import patnet.dal.OrganizationsDAO;
-import patnet.model.OrganizationReviews;
-import patnet.model.Organizations;
-import sun.security.x509.PrivateKeyUsageExtension;
+import patnet.dal.*;
+import patnet.model.*;
 
 
 @WebServlet("/Organizations")
 public class OrganizationsServlet extends HttpServlet{
-	private OrganizationsDAO oDao = new OrganizationsDAO();
+	private OrganizationsDAO oDao = OrganizationsDAO.getInstance();
 
 	// for searching
 	public void doGet(HttpServletRequest req,  HttpServletResponse res) throws ServletException, IOException {

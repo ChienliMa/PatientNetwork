@@ -11,6 +11,10 @@ public class Reviews{
 
 	public Reviews() {
 	}
+	
+	public Reviews(Long reviewId) {
+		ReviewId = reviewId;
+	}
 
 	public Reviews(String userName, Integer rating, String content,
 			Date created) {
